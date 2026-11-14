@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ed6a95224d46044999e66337ec4be7, type: 3}
+  m_Name: FolderColorSettings
+  m_EditorClassIdentifier: 
+  folderColors:
+  - guid: 697b0364342c78e43b00c94ab274c915
+    color: {r: 0.6156863, g: 0.9411765, b: 0.627451, a: 1}
+  - guid: b819b90d8be942244ae294aea0b2ea00
+    color: {r: 1, g: 0.5, b: 0.5, a: 1}
+  - guid: eebf5b592d98b244990d86b3a8a78089
+    color: {r: 0.48235294, g: 0.72156864, b: 0.9411765, a: 1}
+  - guid: 85c3a0ee4bf20ba4690204790f086453
+    color: {r: 0.3764706, g: 0.3764706, b: 0.3764706, a: 1}
+  - guid: 709f11a7f3c4041caa4ef136ea32d874
+    color: {r: 0.627451, g: 0.627451, b: 0.627451, a: 1}
+  - guid: ba062aa6c92b140379dbc06b43dd3b9b
+    color: {r: 0.5999999, g: 0.5, b: 1, a: 1}
+  - guid: f54d1bd14bd3ca042bd867b519fee8cc
+    color: {r: 0.9411765, g: 0.9411765, b: 0.9411765, a: 1}
+  customPresets:
+  - {r: 1, g: 0.48235294, b: 0.48235294, a: 1}
+  - {r: 1, g: 0.60784316, b: 0.48235294, a: 1}
+  - {r: 1, g: 0.8156863, b: 0.48235294, a: 1}
+  - {r: 0.9607843, g: 0.9411765, b: 0.48235294, a: 1}
+  - {r: 0.6156863, g: 0.9411765, b: 0.627451, a: 1}
+  - {r: 0.48235294, g: 0.83137256, b: 0.7058824, a: 1}
+  - {r: 0.48235294, g: 0.72156864, b: 0.9411765, a: 1}
+  - {r: 0.48235294, g: 0.56078434, b: 0.9411765, a: 1}
+  - {r: 0.6901961, g: 0.48235294, b: 0.9411765, a: 1}
+  - {r: 0.9098039, g: 0.48235294, b: 0.9411765, a: 1}
+  - {r: 0.9411765, g: 0.48235294, b: 0.72156864, a: 1}
+  - {r: 0.9411765, g: 0.9411765, b: 0.9411765, a: 1}
+  - {r: 0.627451, g: 0.627451, b: 0.627451, a: 1}
+  - {r: 0.3764706, g: 0.3764706, b: 0.3764706, a: 1}
+  - {r: 0.16470589, g: 0.16470589, b: 0.16470589, a: 1}
+  quickColors: []
+  applyToSubfolders: 0
+  ignoreColored: 0
+  quickPopupOnHold: 1
