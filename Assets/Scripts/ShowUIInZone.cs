@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ShowUIInZone : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
         
@@ -13,11 +14,19 @@ public class ShowUIInZone : MonoBehaviour
     {
         
     }
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("UIZone"))
         {
-            other.GetComponent<UIZone>().remove = 0;
+            other.GetComponent<UIZone>().unityEvent?.Invoke();
+            other.GetComponent<UIZone>().UIObject.GetComponent<UIShower>().shown = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("UIZone"))
+        {
+            other.GetComponent<UIZone>().UIObject.GetComponent<UIShower>().shown = false;
         }
     }
 }
