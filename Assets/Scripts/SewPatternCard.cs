@@ -38,5 +38,6 @@ public class SewPatternCard : MonoBehaviour, IPointerClickHandler
         sewResulter.meshFilter1.mesh = mesh;
         sewResulter.clothes = false;
         sewResulter.type = type;
+        sewResulter.icon= icon;
     }
 }

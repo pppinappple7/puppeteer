@@ -91,22 +91,22 @@ public class SewSetUp : MonoBehaviour
         foreach (Inventory.SewingItem item in inventory.sewings)
         {
             
-            if (item is Inventory.SewingCloth cloth)
+            if (item is Inventory.SewingCloth cloth )
             {
                 
                 GameObject spawnedCard = Instantiate(clothCardPrefub, clothContentBox);
                 spawnedCard.transform.SetAsFirstSibling();
                 SetCardPosition(spawnedCard, clothIndex++);
-
                 SewClothCard card = spawnedCard.GetComponent<SewClothCard>();
 
+                card.price = cloth.price;
                 card.name = cloth.name;
                 card.color = cloth.color;
                 card.inventory = inventory;
                 card.icon = cloth.icon;
                 card.ammount = cloth.ammount;
                 card.targetMesh = sewResulter.renderer1;
-                
+                card.sewResulter = sewResulter;
                 spawnedCard.transform.GetChild(0)
                     .GetComponent<UnityEngine.UI.Image>().sprite = cloth.icon;
 
@@ -117,7 +117,7 @@ public class SewSetUp : MonoBehaviour
                 SetCardPosition(spawnedCard2, clothIndex2++);
 
                 SewClothCard card2 = spawnedCard2.GetComponent<SewClothCard>();
-
+                card.sewResulter = sewResulter;
                 card2.name = cloth.name;
                 card2.color = cloth.color;
                 card2.inventory = inventory;

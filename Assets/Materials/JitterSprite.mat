@@ -31,7 +31,7 @@ Material:
     m_Floats:
     - _Amplitude: 0.0007
     - _ChunkSize: 100
-    - _Frequency: 3
+    - _Frequency: 3.5
     - _Pixelation: 100
     - _Scale: 1
     - _Speed: 5

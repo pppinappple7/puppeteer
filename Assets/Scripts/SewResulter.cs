@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class SewResulter : MonoBehaviour
 {
+    public int price1;
+    public int price2;
+    public Sprite icon;
     [SerializeField] Inventory inventory;
     [SerializeField] SewSetUp SewSetUp;
     public string type;
@@ -50,6 +53,8 @@ public class SewResulter : MonoBehaviour
                     color1 = renderer1.material.color,
                     color2 = renderer2.material.color,
                     type = type,
+                    icon = icon,
+                    price = price1 + price2
                 });
             }
         }
@@ -62,6 +67,8 @@ public class SewResulter : MonoBehaviour
                     mesh = meshFilter1.mesh,
                     color = renderer1.material.color,
                     type = type,
+                    icon = icon,
+                    price = price1
                 });
             }
         }

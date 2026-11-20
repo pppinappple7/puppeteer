@@ -15,19 +15,22 @@ public class Inventory : MonoBehaviour
     [System.Serializable]
     public class Part:combining
     {
+        public int price;
         public Mesh mesh;
         public Color color;
         public string type;
-
+        public Sprite icon;
     }
     [System.Serializable]
     public class Clothes: combining
     {
+        public int price;
         public Mesh mesh1;
         public Mesh mesh2;
         public Color color1;
         public Color color2;
         public string type;
+        public Sprite icon;
     }
 
     #region sewing classes
@@ -40,7 +43,7 @@ public class Inventory : MonoBehaviour
     [System.Serializable]
     public class SewingCloth : SewingItem
     {
-
+        public int price;
         public int ammount;
         public Color color;
     }
@@ -121,6 +124,7 @@ public class Inventory : MonoBehaviour
                     {
                         box.contents.Add(new SewingCloth
                         {
+                            price=cloth.price,
                             ammount= cloth.ammount,
                             name = cloth.name,
                             icon = cloth.icon,

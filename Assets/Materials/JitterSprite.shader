@@ -1,11 +1,9 @@
-
 Shader "Custom/SpriteChunkJitter"
 {
     Properties
     {
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Color", Color) = (1,1,1,1)
-
         _Amplitude ("Shift Strength", Range(0, 0.05)) = 0.008
         _Frequency ("Update Frequency", Range(1, 30)) = 12
         _ChunkSize ("Chunk Size", Range(2, 100)) = 20
@@ -60,8 +58,40 @@ Shader "Custom/SpriteChunkJitter"
 
             float Hash(float2 p)
             {
-                return frac(sin(dot(p, float2(127.1, 311.7)))
-                    * 43758.5453);
+                return frac(sin(dot(p, float2(127.1, 311.7))) * 43758.5453);
+            }
+
+            float2 SmoothHash(float2 p, float frame)
+            {
+                float2 a = floor(p);
+                float2 b = frac(p);
+
+                b = b * b * (3.0 - 2.0 * b);
+
+                float2 v00 = float2(
+                    Hash(a + frame),
+                    Hash(a + frame + 17.3)
+                );
+
+                float2 v10 = float2(
+                    Hash(a + float2(1,0) + frame),
+                    Hash(a + float2(1,0) + frame + 17.3)
+                );
+
+                float2 v01 = float2(
+                    Hash(a + float2(0,1) + frame),
+                    Hash(a + float2(0,1) + frame + 17.3)
+                );
+
+                float2 v11 = float2(
+                    Hash(a + float2(1,1) + frame),
+                    Hash(a + float2(1,1) + frame + 17.3)
+                );
+
+                float2 top = lerp(v00, v10, b.x);
+                float2 bottom = lerp(v01, v11, b.x);
+
+                return lerp(top, bottom, b.y) * 2.0 - 1.0;
             }
 
             Varyings vert(Attributes IN)
@@ -76,22 +106,11 @@ Shader "Custom/SpriteChunkJitter"
             half4 frag(Varyings IN) : SV_Target
             {
                 float frame = floor(_Time.y * _Frequency);
-
-                
-                float2 chunk = floor(IN.uv * _ChunkSize);
-
-                
-                float2 randomOffset;
-                randomOffset.x = Hash(chunk + frame) * 2.0 - 1.0;
-                randomOffset.y = Hash(chunk + frame + 123.4) * 2.0 - 1.0;
-
-                
+                float2 grid = IN.uv * _ChunkSize;
+                float2 randomOffset = SmoothHash(grid, frame);
                 float2 uv = IN.uv + randomOffset * _Amplitude;
 
-                half4 col = SAMPLE_TEXTURE2D(
-                    _MainTex, sampler_MainTex, uv
-                );
-
+                half4 col = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv);
                 return col * IN.color;
             }
             ENDHLSL

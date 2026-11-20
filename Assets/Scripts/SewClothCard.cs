@@ -7,7 +7,8 @@ using static UnityEditor.Progress;
 
 public class SewClothCard : MonoBehaviour, IPointerClickHandler
 {
-
+    public SewResulter sewResulter;
+    public int price;
     public MeshRenderer targetMesh;
     public Color color;
     public Inventory inventory;
@@ -46,5 +47,13 @@ public class SewClothCard : MonoBehaviour, IPointerClickHandler
     public void Select()
     {
         targetMesh.material.color= color;
+        if (targetMesh.GetComponent<MeshFilter>().mesh == sewResulter.meshFilter1.mesh)
+        {
+            sewResulter.price1= price;
+        }
+        else
+        {
+            sewResulter.price2 = price;
+        }
     }
 }
