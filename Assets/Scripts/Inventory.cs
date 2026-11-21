@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
@@ -50,12 +49,14 @@ public class Inventory : MonoBehaviour
     [System.Serializable]
     public class SewingPart : SewingItem
     {
+        public int price;
         public string type;
         public Mesh mesh;
     }
     [System.Serializable]
     public class SewingClothes : SewingItem
     {
+        public int price;
         public string type;
         public Sprite icon2;
         public Mesh mesh1;
@@ -135,6 +136,7 @@ public class Inventory : MonoBehaviour
                     {
                         box.contents.Add(new SewingPart
                         {
+                            price=part.price,
                             name = part.name,
                             icon = part.icon,
                             mesh = part.mesh,
@@ -147,6 +149,7 @@ public class Inventory : MonoBehaviour
                     {
                         box.contents.Add(new SewingClothes
                         {
+                            price = clothes.price,
                             name = clothes.name,
                             icon = clothes.icon,
                             mesh1 = clothes.mesh1,

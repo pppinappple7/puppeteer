@@ -1,12 +1,34 @@
 
 using TMPro;
 using UnityEngine;
+using static Customer;
 
 
 public class Customer : MonoBehaviour
 {
+    [SerializeField] float requiredPercent;
+    public class Requirement
+    {
+        public string objName;
+        public bool clothes;
+    }
+    [System.Serializable]
+    public class ColorRequirement : Requirement
+    {
+        public Color color;
+    }
+    [System.Serializable]
+    public class MeshRequirement : Requirement
+    {
+        public Mesh mesh;
+    }
+    [SerializeField] ColorRequirement[] colorRequirements;
+    [SerializeField] MeshRequirement[] meshRequirements;
+    [SerializeField] GameObject doll;
     [SerializeField] Inventory inventory;
-    int payment;
+
+    public int payment;
+    public int goods;
     bool over=false;
     bool good;
     bool gotDolled=false;
@@ -16,7 +38,7 @@ public class Customer : MonoBehaviour
     [SerializeField] float letterPeriod = 0.1f;
     float speechTimer;
     [SerializeField] TextMeshProUGUI Speech;
-    int curentText;
+    public int curentText;
     public bool shown;
     bool taken;
     [SerializeField] string[] order;
@@ -66,10 +88,8 @@ public class Customer : MonoBehaviour
             );
         }
         spriteRenderer.color = color;
-    }
-    private void LateUpdate()
-    {
-        if ((!taken||gotDolled)&& shown)
+        
+        if ((!taken || gotDolled) && shown)
         {
             uiShower.shown = false;
         }
@@ -81,6 +101,11 @@ public class Customer : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+        doll.SetActive(uiShower.shown);
+    }
+    private void LateUpdate()
+    {
+        
     }
     public void Next()
     {
@@ -105,30 +130,83 @@ public class Customer : MonoBehaviour
         }
         else if (gotDolled)
         {
+            shown=true;
             if (good)
             {
-                Speech.text = gratitude[curentText];
                 if (curentText > gratitude.Length - 1)
                 {
-                    over=true;
+                    over = true;
+                    shown = false;
+                    return;
                 }
+                Speech.text = gratitude[curentText];
+
             }
             else
             {
-                Speech.text = neutral[curentText];
-                if (curentText > neutral.Length - 1)
+                if (curentText > gratitude.Length - 1)
                 {
                     over = true;
+                    shown = false;
+                    return;
                 }
+                Speech.text = neutral[curentText];
             }
         }
 
     }
     public void GetDolled(GameObject doll)
     {
+        good = false;
+        payment = 0;
+        goods = 0;
+        foreach(PartPicker partPicker in doll.GetComponentsInChildren<PartPicker>())
+        {
+            payment += (int)(partPicker.price * 0.5f);
+        }
+        foreach (Pricer price in doll.GetComponentsInChildren<Pricer>())
+        {
+            payment += (int)(price.price * 0.5f);
+        }
         gotDolled = true;
-        good = true;
-        inventory.money += payment;
+        
+        foreach (ColorRequirement requirement in colorRequirements)
+        {
+            
+            if (doll.transform.Find(requirement.objName).GetComponent<MeshRenderer>().material.color == requirement.color)
+            {
+
+                goods++;
+            }
+
+        }
+        foreach(MeshRequirement requirement1 in meshRequirements)
+        {
+            if (doll.transform.Find(requirement1.objName).GetComponent<MeshFilter>().mesh == requirement1.mesh)
+            {
+                goods++;
+            }
+        }
+        if(goods/(colorRequirements.Length+meshRequirements.Length)>=requiredPercent)
+        {
+            good = true;
+        }
+        curentText = 0;
+        if (good)
+        {
+            Speech.text = gratitude[curentText];
+            inventory.money += (int)(payment * 1.1f);
+        }
+        else
+        {
+            Speech.text = neutral[curentText];
+            inventory.money += (int)(payment * 1f);
+        }
+
+            
         inventory.moneyCounter.transform.localScale *= 2;
+        gotDolled = true;
+        shown = true;
     }
+    
 }

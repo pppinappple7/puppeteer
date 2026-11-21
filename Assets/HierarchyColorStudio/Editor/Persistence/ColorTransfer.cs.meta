@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 7e9b68b7ab0b2990b95b97334b606e8f
+AssetOrigin:
+  serializedVersion: 1
+  productId: 402348
+  packageName: Hierarchy Color Studio
+  packageVersion: 1.1.0
+  assetPath: Assets/HierarchyColorStudio/Editor/Persistence/ColorTransfer.cs
+  uploadId: 1016828

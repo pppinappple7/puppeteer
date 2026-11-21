@@ -1,13 +1,11 @@
 
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static UnityEditor.Progress;
 
-public class PartCard : MonoBehaviour, IPointerClickHandler
+
+public class PartCard : MonoBehaviour
 {
+    public int price;
     public string type;
     public Mesh mesh;
     public Color color;
@@ -25,17 +23,11 @@ public class PartCard : MonoBehaviour, IPointerClickHandler
 
     }
    
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            
-        }
-           
-    }
+    
     public void Select()
     {
         combineSetUp.tagetmesh.material.color = color;
         combineSetUp.tagetFilter.mesh = mesh;
+        combineSetUp.tagetmesh.GetComponent<PartPicker>().price = price;
     }
 }

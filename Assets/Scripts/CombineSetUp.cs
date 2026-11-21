@@ -1,13 +1,6 @@
-using TMPro;
 
-using UnityEditor.Animations;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static SewSetUp;
-using static ShopSetUp;
-using static UnityEditor.Progress;
+
 
 public class CombineSetUp : MonoBehaviour
 { 
@@ -15,6 +8,10 @@ public class CombineSetUp : MonoBehaviour
     int y = 0;
     public MeshRenderer tagetmesh;
     public MeshFilter tagetFilter;
+    public MeshRenderer tagetmesh1;
+    public MeshFilter tagetFilter1;
+    public MeshRenderer tagetmesh2;
+    public MeshFilter tagetFilter2;
     public string type;
     [SerializeField] GameObject partCardPrefub;
     [SerializeField] Transform partContentBox;
@@ -78,6 +75,7 @@ public class CombineSetUp : MonoBehaviour
                 card.inventory = inventory;
                 card.icon = part.icon;
                 card.color=part.color;
+                card.price=part.price;
                 spawnedCard.transform.GetChild(0)
                     .GetComponent<UnityEngine.UI.Image>().sprite = part.icon;
                 spawnedCard.transform.GetChild(0)
@@ -92,6 +90,7 @@ public class CombineSetUp : MonoBehaviour
                 SetCardPosition(spawnedCard, clothesIndex++);
 
                 ClothesCard card = spawnedCard.GetComponent<ClothesCard>();
+                card.price = clothes.price;
                 card.combineSetUp = GetComponent<CombineSetUp>();
                 card.type = clothes.type;
                 card.mesh1 = clothes.mesh1;
@@ -109,8 +108,8 @@ public class CombineSetUp : MonoBehaviour
     }
     void SetCardPosition(GameObject card, int index)
     {
-        int x = index % 3;
-        int y = index / 3;
+        int x = index % 2;
+        int y = index / 2;
 
         card.transform.localPosition = new Vector2(
             75 - 37.22f + x * 75,

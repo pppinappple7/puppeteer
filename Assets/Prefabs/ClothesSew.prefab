@@ -122,9 +122,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2140076303080378294}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
-        m_MethodName: Select
+      - m_Target: {fileID: 7034189247491079658}
+        m_TargetAssemblyTypeName: SewClothesCard, Assembly-CSharp
+        m_MethodName: Selected
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -147,6 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SewClothesCard
   sewResulter: {fileID: 0}
+  type: 
   mesh1: {fileID: 0}
   mesh2: {fileID: 0}
   inventory: {fileID: 0}

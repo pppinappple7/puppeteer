@@ -1,9 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static UnityEditor.Progress;
+
 
 public class ShopPatternCard : MonoBehaviour, IPointerClickHandler
 {

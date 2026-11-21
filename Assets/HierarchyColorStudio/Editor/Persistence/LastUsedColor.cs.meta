@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: add54511199e95f22949d686c9f4ca3e
+AssetOrigin:
+  serializedVersion: 1
+  productId: 402348
+  packageName: Hierarchy Color Studio
+  packageVersion: 1.1.0
+  assetPath: Assets/HierarchyColorStudio/Editor/Persistence/LastUsedColor.cs
+  uploadId: 1016828

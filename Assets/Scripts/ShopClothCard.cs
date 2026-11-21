@@ -1,9 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static UnityEditor.Progress;
+
 
 public class ShopClothCard : MonoBehaviour, IPointerClickHandler
 {
@@ -19,6 +17,7 @@ public class ShopClothCard : MonoBehaviour, IPointerClickHandler
     public int price;
     void Start()
     {
+        Debug.Log(inventory.name);
         foreach (var item in inventory.cart)
         {
             if (item.name == name)

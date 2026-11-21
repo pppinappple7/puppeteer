@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class SewResulter : MonoBehaviour
 {
+    public int price;
     public int price1;
     public int price2;
     public Sprite icon;
@@ -44,7 +45,7 @@ public class SewResulter : MonoBehaviour
     {
         if (clothes)
         {
-            if(meshFilter1.mesh == null && meshFilter2.mesh!=null && renderer1.material.color!=Color.black && renderer2.material.color != Color.black)
+            if(meshFilter1.mesh != null && meshFilter2.mesh!=null && renderer1.material.color!=Color.black && renderer2.material.color != Color.black)
             {
                 inventory.combiningInventory.Add(new Inventory.Clothes()
                 {
@@ -54,7 +55,7 @@ public class SewResulter : MonoBehaviour
                     color2 = renderer2.material.color,
                     type = type,
                     icon = icon,
-                    price = price1 + price2
+                    price = price1 + price2 + price
                 });
             }
         }
@@ -68,7 +69,7 @@ public class SewResulter : MonoBehaviour
                     color = renderer1.material.color,
                     type = type,
                     icon = icon,
-                    price = price1
+                    price = price1 + price
                 });
             }
         }

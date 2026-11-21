@@ -1,0 +1,201 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3e1aab73da22cc4890818555df7d414, type: 3}
+  m_Name: Hierarchy Color Studio
+  m_EditorClassIdentifier: CryNet.HierarchyColorStudio.Editor::CryNet.HierarchyColorStudio.HierarchyColorStore
+  m_Version: 2
+  m_Appearance:
+    m_Enabled: 1
+    m_Decorations: 3
+    m_MarkerShape: 0
+    m_MarkerPlacement: 0
+    m_MarkerSize: 8
+    m_TintOpacity: 0.22
+    m_TintScope: 1
+    m_LabelBrightness: 1
+    m_LabelFillsBackground: 0
+    m_RowBackgroundDark: {r: 0.2196, g: 0.2196, b: 0.2196, a: 1}
+    m_RowBackgroundLight: {r: 0.7843, g: 0.7843, b: 0.7843, a: 1}
+    m_SelectedRowBehavior: 1
+    m_HoverBehavior: 0
+    m_LabelOffset: 18
+    m_DefaultApplyScope: 0
+    m_DebugLogging: 0
+    m_Mode: 0
+    m_ZebraOpacity: 0.05
+    m_IconPlacement: 0
+    m_FolderIcon: 
+    m_PrefabIcon: 
+    m_TextColorSource: 0
+    m_CustomTextColor: {r: 1, g: 1, b: 1, a: 1}
+  m_Presets:
+  - m_Id: d6c8d4e5b27443ca83fbe0ef1ea56316
+    m_Name: Red
+    m_Color: E74C3CFF
+    m_Elements:
+      m_Background: 0
+      m_Text: 0
+      m_TextColor: 
+      m_Marker: 0
+      m_MarkerShape: 0
+      m_Icon: 
+  - m_Id: 1df924ee984d45dfafa15b488b596c36
+    m_Name: Orange
+    m_Color: E67E22FF
+    m_Elements:
+      m_Background: 0
+      m_Text: 0
+      m_TextColor: 
+      m_Marker: 0
+      m_MarkerShape: 0
+      m_Icon: 
+  - m_Id: 16fab6de6517468bac7e0cf4c39daf06
+    m_Name: Amber
+    m_Color: F1C40FFF
+    m_Elements:
+      m_Background: 0
+      m_Text: 0
+      m_TextColor: 
+      m_Marker: 0
+      m_MarkerShape: 0
+      m_Icon: 
+  - m_Id: 7b3dc1da970645919655029ac93987cc
+    m_Name: Green
+    m_Color: 2ECC71FF
+    m_Elements:
+      m_Background: 0
+      m_Text: 0
+      m_TextColor: 
+      m_Marker: 0
+      m_MarkerShape: 0
+      m_Icon: 
+  - m_Id: ae4d87b10bd144cf95ef94232e83e782
+    m_Name: Teal
+    m_Color: 1ABC9CFF
+    m_Elements:
+      m_Background: 0
+      m_Text: 0
+      m_TextColor: 
+      m_Marker: 0
+      m_MarkerShape: 0
+      m_Icon: 
+  - m_Id: 4b8a33522ae44d2e8566f8be2cd7887c
+    m_Name: Blue
+    m_Color: 3498DBFF
+    m_Elements:
+      m_Background: 0
+      m_Text: 0
+      m_TextColor: 
+      m_Marker: 0
+      m_MarkerShape: 0
+      m_Icon: 
+  - m_Id: bd2918e67bfa48a0bc3c322be322a608
+    m_Name: Indigo
+    m_Color: 5B6CE8FF
+    m_Elements:
+      m_Background: 0
+      m_Text: 0
+      m_TextColor: 
+      m_Marker: 0
+      m_MarkerShape: 0
+      m_Icon: 
+  - m_Id: 622905ac8c62448ca1c7cabe6894f3d0
+    m_Name: Violet
+    m_Color: 9B59B6FF
+    m_Elements:
+      m_Background: 0
+      m_Text: 0
+      m_TextColor: 
+      m_Marker: 0
+      m_MarkerShape: 0
+      m_Icon: 
+  - m_Id: 110f58210edf46c9be9d581a3402b11a
+    m_Name: Pink
+    m_Color: E85A9BFF
+    m_Elements:
+      m_Background: 0
+      m_Text: 0
+      m_TextColor: 
+      m_Marker: 0
+      m_MarkerShape: 0
+      m_Icon: 
+  - m_Id: d7645f4a5c2f4d688f5001ab252de2c9
+    m_Name: Slate
+    m_Color: 7F8C8DFF
+    m_Elements:
+      m_Background: 0
+      m_Text: 0
+      m_TextColor: 
+      m_Marker: 0
+      m_MarkerShape: 0
+      m_Icon: 
+  m_Assignments:
+  - m_Key: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-978608413-0
+    m_Color: 0099FFFF
+    m_PresetId: 
+    m_Elements:
+      m_Background: 0
+      m_Text: 2
+      m_TextColor: FFFFFFFF
+      m_Marker: 0
+      m_MarkerShape: 0
+      m_Icon: Canvas Icon
+  - m_Key: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1188118011-0
+    m_Color: 000000FF
+    m_PresetId: 
+    m_Elements:
+      m_Background: 0
+      m_Text: 2
+      m_TextColor: FFFFFFFF
+      m_Marker: 0
+      m_MarkerShape: 0
+      m_Icon: console.infoicon
+  - m_Key: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-9156347144040445547-138791217
+    m_Color: 00F4FFFF
+    m_PresetId: 
+    m_Elements:
+      m_Background: 0
+      m_Text: 2
+      m_TextColor: FFFFFFFF
+      m_Marker: 0
+      m_MarkerShape: 0
+      m_Icon: NavMeshAgent Icon
+  - m_Key: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1838054042-0
+    m_Color: FFE764FF
+    m_PresetId: 
+    m_Elements:
+      m_Background: 0
+      m_Text: 2
+      m_TextColor: FFFFFFFF
+      m_Marker: 0
+      m_MarkerShape: 0
+      m_Icon: Light Icon
+  - m_Key: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-2139579827-0
+    m_Color: EE8EFFFF
+    m_PresetId: 
+    m_Elements:
+      m_Background: 0
+      m_Text: 2
+      m_TextColor: FFFFFFFF
+      m_Marker: 0
+      m_MarkerShape: 0
+      m_Icon: Transform Icon
+  - m_Key: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1697783886-0
+    m_Color: E67E22FF
+    m_PresetId: 
+    m_Elements:
+      m_Background: 0
+      m_Text: 2
+      m_TextColor: FFFFFFFF
+      m_Marker: 0
+      m_MarkerShape: 0
+      m_Icon: GameObject Icon

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: eda7776e94a403502973a3622a0cac0d
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 402348
+  packageName: Hierarchy Color Studio
+  packageVersion: 1.1.0
+  assetPath: Assets/HierarchyColorStudio/Documentation/Changelog.md
+  uploadId: 1016828

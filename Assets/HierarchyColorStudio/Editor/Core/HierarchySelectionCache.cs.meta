@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 1303d3fa51084b14bbd0831229079da9
+AssetOrigin:
+  serializedVersion: 1
+  productId: 402348
+  packageName: Hierarchy Color Studio
+  packageVersion: 1.1.0
+  assetPath: Assets/HierarchyColorStudio/Editor/Core/HierarchySelectionCache.cs
+  uploadId: 1016828

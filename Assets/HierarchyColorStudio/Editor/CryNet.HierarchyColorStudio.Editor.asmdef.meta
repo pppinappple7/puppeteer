@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 1b28f4f2ec689c0aeb364f65ea2f4a3b
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 402348
+  packageName: Hierarchy Color Studio
+  packageVersion: 1.1.0
+  assetPath: Assets/HierarchyColorStudio/Editor/CryNet.HierarchyColorStudio.Editor.asmdef
+  uploadId: 1016828

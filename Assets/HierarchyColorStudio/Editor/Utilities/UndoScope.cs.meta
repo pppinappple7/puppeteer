@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: b9c35a1e1d3b7b208bd10e0a102894d6
+AssetOrigin:
+  serializedVersion: 1
+  productId: 402348
+  packageName: Hierarchy Color Studio
+  packageVersion: 1.1.0
+  assetPath: Assets/HierarchyColorStudio/Editor/Utilities/UndoScope.cs
+  uploadId: 1016828

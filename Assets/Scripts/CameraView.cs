@@ -1,6 +1,6 @@
-using UnityEditor.PackageManager;
+
 using UnityEngine;
-using static UnityEngine.UI.Image;
+
 
 public class CameraView : MonoBehaviour
 {

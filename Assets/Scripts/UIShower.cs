@@ -14,14 +14,22 @@ public class UIShower : MonoBehaviour
     {
         if (shown)
         {
-            canvasGroup.blocksRaycasts=true;
-            canvasGroup.alpha +=6* Time.deltaTime;
-            canvasGroup.interactable=true;
+            if (canvasGroup.interactable)
+            {
+                canvasGroup.blocksRaycasts = true;
+                canvasGroup.alpha += 6 * Time.deltaTime;
+            }
+
+                canvasGroup.interactable=true;
         }
         else
         {
-            canvasGroup.blocksRaycasts = false;
-            canvasGroup.alpha -=6* Time.deltaTime;
+            if (!canvasGroup.interactable)
+            {
+                canvasGroup.blocksRaycasts = false;
+                canvasGroup.alpha -= 6 * Time.deltaTime;
+            }
+                
             canvasGroup.interactable = false;
         }
     }

@@ -1,12 +1,7 @@
 using TMPro;
 
-using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static SewSetUp;
-using static ShopSetUp;
-using static UnityEditor.Progress;
+
 
 public class ShopSetUp : MonoBehaviour
 { 
@@ -105,12 +100,13 @@ public class ShopSetUp : MonoBehaviour
             spawnedCard.transform.localPosition = new Vector2(75- 37.22f + x * 75, -50 + 75 * y);
             x++;
             if (x >= 3) { x = 0; y--; }
+            Debug.Log(clothesInfo.name);
             spawnedCard.GetComponent<ShopClothesCard>().name = clothesInfo.name;
             spawnedCard.GetComponent<ShopClothesCard>().price = clothesInfo.price;
             spawnedCard.GetComponent<ShopClothesCard>().mesh1 = clothesInfo.mesh1;
             spawnedCard.GetComponent<ShopClothesCard>().mesh2 = clothesInfo.mesh2;
             spawnedCard.GetComponent<ShopClothesCard>().preview = clothesInfo.preview;
-            spawnedCard.GetComponent<ShopPatternCard>().type = clothesInfo.type;
+            spawnedCard.GetComponent<ShopClothesCard>().type = clothesInfo.type;
             spawnedCard.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().sprite = clothesInfo.icon;
             spawnedCard.GetComponent<ShopClothesCard>().inventory = inventory;
             spawnedCard.GetComponent<ShopClothesCard>().previewObj = previewObj;

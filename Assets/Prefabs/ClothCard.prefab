@@ -364,6 +364,7 @@ MonoBehaviour:
   color: {r: 0, g: 0, b: 0, a: 0}
   inventory: {fileID: 0}
   preview: {fileID: 0}
+  icon: {fileID: 0}
   previewObj: {fileID: 0}
   name: 
   price: 0

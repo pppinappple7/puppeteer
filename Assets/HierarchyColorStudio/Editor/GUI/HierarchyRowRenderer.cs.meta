@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 883dcc2beed3bf44e9f05dcbc26767e5
+AssetOrigin:
+  serializedVersion: 1
+  productId: 402348
+  packageName: Hierarchy Color Studio
+  packageVersion: 1.1.0
+  assetPath: Assets/HierarchyColorStudio/Editor/GUI/HierarchyRowRenderer.cs
+  uploadId: 1016828

@@ -1,12 +1,10 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static UnityEditor.Progress;
 
 public class SewClothCard : MonoBehaviour, IPointerClickHandler
 {
+    public bool accent;
     public SewResulter sewResulter;
     public int price;
     public MeshRenderer targetMesh;
@@ -47,7 +45,8 @@ public class SewClothCard : MonoBehaviour, IPointerClickHandler
     public void Select()
     {
         targetMesh.material.color= color;
-        if (targetMesh.GetComponent<MeshFilter>().mesh == sewResulter.meshFilter1.mesh)
+        Debug.Log(price);
+        if (!accent)
         {
             sewResulter.price1= price;
         }

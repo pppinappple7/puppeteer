@@ -1,12 +1,11 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static UnityEditor.Progress;
+
 
 public class ShopClothesCard : MonoBehaviour, IPointerClickHandler
 {
+    public string name;
     public GameObject countObj;
     public string type;
     public Mesh mesh1;
@@ -16,7 +15,7 @@ public class ShopClothesCard : MonoBehaviour, IPointerClickHandler
     public Sprite preview;
     public Sprite icon;
     public GameObject previewObj;
-    public string name;
+    
     public int price;
     void Start()
     {

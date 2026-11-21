@@ -1,12 +1,6 @@
-using TMPro;
 
-using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static SewSetUp;
-using static ShopSetUp;
-using static UnityEditor.Progress;
+
 
 public class SewSetUp : MonoBehaviour
 { 
@@ -98,7 +92,7 @@ public class SewSetUp : MonoBehaviour
                 spawnedCard.transform.SetAsFirstSibling();
                 SetCardPosition(spawnedCard, clothIndex++);
                 SewClothCard card = spawnedCard.GetComponent<SewClothCard>();
-
+                card.accent = false;
                 card.price = cloth.price;
                 card.name = cloth.name;
                 card.color = cloth.color;
@@ -118,12 +112,14 @@ public class SewSetUp : MonoBehaviour
 
                 SewClothCard card2 = spawnedCard2.GetComponent<SewClothCard>();
                 card.sewResulter = sewResulter;
+                card.accent = true;
                 card2.name = cloth.name;
                 card2.color = cloth.color;
                 card2.inventory = inventory;
                 card2.icon = cloth.icon;
                 card2.ammount = cloth.ammount;
                 card2.targetMesh = sewResulter.renderer2;
+                card2.sewResulter = sewResulter;
                 spawnedCard2.transform.GetChild(0)
                     .GetComponent<UnityEngine.UI.Image>().sprite = cloth.icon;
             }
@@ -142,6 +138,7 @@ public class SewSetUp : MonoBehaviour
                 card.inventory = inventory;
                 card.icon = pattern.icon;
                 card.sewResulter = sewResulter;
+                card.price = pattern.price;
                 spawnedCard.transform.GetChild(0)
                     .GetComponent<UnityEngine.UI.Image>().sprite = pattern.icon;
             }
@@ -160,6 +157,7 @@ public class SewSetUp : MonoBehaviour
                 card.mesh2 = clothes.mesh2;
                 card.inventory = inventory;
                 card.icon = clothes.icon;
+                card.price=clothes.price;
                 card.sewResulter=sewResulter;
                 spawnedCard.transform.GetChild(0)
                     .GetComponent<UnityEngine.UI.Image>().sprite = clothes.icon;

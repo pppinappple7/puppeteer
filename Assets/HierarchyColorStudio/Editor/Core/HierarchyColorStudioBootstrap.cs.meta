@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: e32dd3a6819f4f73eb83a2e69b153b44
+AssetOrigin:
+  serializedVersion: 1
+  productId: 402348
+  packageName: Hierarchy Color Studio
+  packageVersion: 1.1.0
+  assetPath: Assets/HierarchyColorStudio/Editor/Core/HierarchyColorStudioBootstrap.cs
+  uploadId: 1016828

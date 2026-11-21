@@ -8,6 +8,9 @@ public class PartPicker : MonoBehaviour
     [SerializeField] CombineSetUp CombineSetUp;
     [SerializeField] string type;
     [SerializeField] LayerMask layerMask;
+    public int price;
+    [SerializeField] GameObject clothes1;
+    [SerializeField] GameObject clothes2;
     void Start()
     {
         outline = GetComponent<Outline>();
@@ -40,6 +43,14 @@ public class PartPicker : MonoBehaviour
                 {
                     CombineSetUp.tagetmesh=GetComponent<MeshRenderer>();
                     CombineSetUp.tagetFilter=GetComponent<MeshFilter>();
+                    if (clothes1 != null)
+                    {
+                        CombineSetUp.tagetmesh1 = clothes1.GetComponent<MeshRenderer>();
+                        CombineSetUp.tagetFilter1 = clothes1.GetComponent<MeshFilter>();
+                        CombineSetUp.tagetmesh2 = clothes2.GetComponent<MeshRenderer>();
+                        CombineSetUp.tagetFilter2 = clothes2.GetComponent<MeshFilter>();
+                    }
+                    
                     CombineSetUp.type = type;
                     CombineSetUp.Refresh();
                 }

@@ -1,12 +1,11 @@
-using TMPro;
+
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static UnityEditor.Progress;
 
-public class SewPatternCard : MonoBehaviour, IPointerClickHandler
+
+public class SewPatternCard : MonoBehaviour
 {
+    public int price;
     public SewResulter sewResulter;
     public string type;
     public Mesh mesh;
@@ -25,19 +24,13 @@ public class SewPatternCard : MonoBehaviour, IPointerClickHandler
 
     }
    
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            
-        }
-           
-    }
+    
     public void Selected()
     {
         sewResulter.meshFilter1.mesh = mesh;
         sewResulter.clothes = false;
         sewResulter.type = type;
         sewResulter.icon= icon;
+        sewResulter.price = price;
     }
 }

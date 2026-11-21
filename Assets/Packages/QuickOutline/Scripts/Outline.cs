@@ -84,9 +84,11 @@ public class Outline : MonoBehaviour {
 
     // Cache renderers
     renderers = GetComponentsInChildren<Renderer>();
-
-    // Instantiate outline materials
-    outlineMaskMaterial = Instantiate(Resources.Load<Material>(@"Materials/OutlineMask"));
+        Debug.Log($"{name}: найдено Renderer: {renderers.Length}");
+        foreach (var r in renderers)
+            Debug.Log($"{name} -> {r.name} | {r.GetType().Name}", r);
+        // Instantiate outline materials
+        outlineMaskMaterial = Instantiate(Resources.Load<Material>(@"Materials/OutlineMask"));
     outlineFillMaterial = Instantiate(Resources.Load<Material>(@"Materials/OutlineFill"));
 
     outlineMaskMaterial.name = "OutlineMask (Instance)";
@@ -110,7 +112,8 @@ public class Outline : MonoBehaviour {
 
       renderer.materials = materials.ToArray();
     }
-  }
+        Debug.Log($"{name}: Outline OnEnable, Renderer count = {renderers?.Length}");
+    }
 
   void OnValidate() {
 
