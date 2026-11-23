@@ -15,7 +15,6 @@ public class PaperTab : MonoBehaviour
         image = GetComponent<UnityEngine.UI.Image>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (open)

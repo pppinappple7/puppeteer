@@ -1,7 +1,5 @@
-
-using TMPro;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class PartCard : MonoBehaviour
 {
@@ -12,22 +10,61 @@ public class PartCard : MonoBehaviour
     public CombineSetUp combineSetUp;
     public Inventory inventory;
     public Sprite icon;
-    void Start()
+
+    private Inventory.Part partItem;
+    private CanvasGroup canvasGroup;
+    private float availableAlpha = 1f;
+    private bool available = true;
+
+    public void Configure(Inventory.Part part, CombineSetUp setup)
     {
-        
+        partItem = part;
+        combineSetUp = setup;
+
+        if (part != null)
+        {
+            price = part.price;
+            type = part.type;
+            mesh = part.mesh;
+            color = part.color;
+            icon = part.icon;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
+        canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
 
+        availableAlpha = canvasGroup.alpha;
     }
-   
-    
+
+    public void SetAvailable(bool value)
+    {
+        available = value;
+
+        if (canvasGroup == null)
+        {
+            canvasGroup = GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+                canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        }
+
+        canvasGroup.interactable = value;
+        canvasGroup.blocksRaycasts = value;
+        canvasGroup.alpha = value ? availableAlpha : availableAlpha * 0.45f;
+
+        Button[] buttons = GetComponentsInChildren<Button>(true);
+        foreach (Button button in buttons)
+            button.interactable = value;
+    }
+
     public void Select()
     {
-        combineSetUp.tagetmesh.material.color = color;
-        combineSetUp.tagetFilter.mesh = mesh;
-        combineSetUp.tagetmesh.GetComponent<PartPicker>().price = price;
+        if (!available || partItem == null || combineSetUp == null)
+            return;
+
+        combineSetUp.TryInstallPart(partItem);
     }
 }

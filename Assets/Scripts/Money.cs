@@ -9,7 +9,7 @@ public class Money : MonoBehaviour
     Vector2 defScale;
     SmoothShake shake;
     TextMeshProUGUI text;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
         
@@ -19,7 +19,6 @@ public class Money : MonoBehaviour
         defColor = text.color; 
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (text != null)

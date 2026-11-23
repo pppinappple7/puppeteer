@@ -9,7 +9,7 @@ public class UIShower : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         if (shown)

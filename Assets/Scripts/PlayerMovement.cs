@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     float cameraRotationVelocity = 5;
     [SerializeField] float rotationSpeed = 5f;
     Vector3 positionVelocity=Vector3.zero;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
@@ -20,7 +20,6 @@ public class PlayerMovement : MonoBehaviour
         FPSCon = GetComponent<FirstPersonController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

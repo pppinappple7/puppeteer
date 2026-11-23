@@ -1,105 +1,64 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
 
 public class ShopClothCard : MonoBehaviour, IPointerClickHandler
 {
     public GameObject countObj;
-
     public Color color;
     public Inventory inventory;
-    float doubleClickTimer=0;
+    float doubleClickTimer;
     public Sprite preview;
     public Sprite icon;
     public GameObject previewObj;
     public string name;
     public int price;
+
     void Start()
     {
-        Debug.Log(inventory.name);
-        foreach (var item in inventory.cart)
-        {
-            if (item.name == name)
-            {
-                countObj.SetActive(true);
-                countObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = item.ammount.ToString();
-                
-            }
-            else
-            {
-                countObj.SetActive(false);
-            }
-        }
+        RefreshCount();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (doubleClickTimer > -10)
-        {
+        if (doubleClickTimer > -10f)
             doubleClickTimer -= Time.deltaTime;
-        }
-        
     }
+
+    public void Configure(Inventory targetInventory, GameObject targetPreview, string itemName,
+        int itemPrice, Color itemColor, Sprite itemIcon, Sprite itemPreview)
+    {
+        inventory = targetInventory;
+        previewObj = targetPreview;
+        name = itemName;
+        price = itemPrice;
+        color = itemColor;
+        icon = itemIcon;
+        preview = itemPreview;
+    }
+
     public void open()
     {
         if (doubleClickTimer > 0f)
         {
-            
-            bool isInCart = false;
-            foreach (var item in inventory.cart)
-            {
-                if (item.name == name)
-                {
-                    item.ammount++;
-                    isInCart = true;
-                    countObj.SetActive(true);
-                    countObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = item.ammount.ToString();
-                }
-            }
-            if (!isInCart)
-            {
-                countObj.SetActive(true);
-                countObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text="1";
-                inventory.cart.Add(new Inventory.ShopCloth
-                {
-                    icon = icon,
-                    name = name,
-                    price = price,
-                    color = color,
-                    ammount = 1
-
-                });
-            }
+            ShopCartUtility.AddCloth(inventory, name, price, icon, color);
+            RefreshCount();
         }
+
         doubleClickTimer = 0.25f;
-        previewObj.GetComponent<UnityEngine.UI.Image>().sprite = preview;
-        previewObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = name;
-        previewObj.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = price.ToString();
+        ShopCartUtility.ShowPreview(previewObj, preview, name, price);
     }
+
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            foreach (var item in inventory.cart)
-            {
-                if (item.name == name)
-                {
-                    item.ammount--;
-                    if (item.ammount <= 0)
-                    {
-                        
-                        item.ammount = 0;
-                        inventory.cart.Remove(item);
-                        countObj.SetActive(false);
-                    }
+        if (eventData.button != PointerEventData.InputButton.Right)
+            return;
 
-                    countObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = item.ammount.ToString();
-                    return;
-                }
-            }
-        }
-           
+        int amount = ShopCartUtility.RemoveOne(inventory, name);
+        ShopCartUtility.SetCount(countObj, amount);
+    }
+
+    void RefreshCount()
+    {
+        ShopCartUtility.SetCount(countObj, ShopCartUtility.GetAmount(inventory, name));
     }
 }

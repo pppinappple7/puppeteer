@@ -14,7 +14,7 @@ public class Box : MonoBehaviour
     [SerializeField] float maxImpulse;
     Rigidbody rigidbody;
     [SerializeField] GameObject visuals;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
         
@@ -25,7 +25,6 @@ public class Box : MonoBehaviour
         rigidbody.constraints=RigidbodyConstraints.FreezeAll;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!shot)

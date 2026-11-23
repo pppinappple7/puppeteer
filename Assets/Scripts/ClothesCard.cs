@@ -1,7 +1,5 @@
-
 using UnityEngine;
-using UnityEngine.EventSystems;
-
+using UnityEngine.UI;
 
 public class ClothesCard : MonoBehaviour
 {
@@ -14,24 +12,63 @@ public class ClothesCard : MonoBehaviour
     public CombineSetUp combineSetUp;
     public Inventory inventory;
     public Sprite icon;
-    void Start()
+
+    private Inventory.Clothes clothesItem;
+    private CanvasGroup canvasGroup;
+    private float availableAlpha = 1f;
+    private bool available = true;
+
+    public void Configure(Inventory.Clothes clothes, CombineSetUp setup)
     {
-        
+        clothesItem = clothes;
+        combineSetUp = setup;
+
+        if (clothes != null)
+        {
+            price = clothes.price;
+            type = clothes.type;
+            mesh1 = clothes.mesh1;
+            mesh2 = clothes.mesh2;
+            color1 = clothes.color1;
+            color2 = clothes.color2;
+            icon = clothes.icon;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
+        canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
 
+        availableAlpha = canvasGroup.alpha;
     }
-   
-    
+
+    public void SetAvailable(bool value)
+    {
+        available = value;
+
+        if (canvasGroup == null)
+        {
+            canvasGroup = GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+                canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        }
+
+        canvasGroup.interactable = value;
+        canvasGroup.blocksRaycasts = value;
+        canvasGroup.alpha = value ? availableAlpha : availableAlpha * 0.45f;
+
+        Button[] buttons = GetComponentsInChildren<Button>(true);
+        foreach (Button button in buttons)
+            button.interactable = value;
+    }
+
     public void Select()
     {
-        combineSetUp.tagetmesh1.material.color = color1;
-        combineSetUp.tagetFilter1.mesh = mesh1;
-        combineSetUp.tagetmesh1.transform.parent.GetComponent<Pricer>().price = price;
-        combineSetUp.tagetmesh2.material.color = color2;
-        combineSetUp.tagetFilter2.mesh = mesh2;
+        if (!available || clothesItem == null || combineSetUp == null)
+            return;
+
+        combineSetUp.TryInstallClothes(clothesItem);
     }
 }

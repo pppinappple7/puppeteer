@@ -9,13 +9,12 @@ public class CameraView : MonoBehaviour
     [SerializeField] Transform raycastOrigin;
     [SerializeField] LayerMask interactableLayer;
     [SerializeField] LayerMask boxLayer;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
         PlayerMovement=GetComponent<PlayerMovement>();
     }
 
-    // Update is called once per frame
     void LateUpdate()
     {
         Cursor.visible = false;
@@ -23,7 +22,6 @@ public class CameraView : MonoBehaviour
         if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward, out hitInfo, 20f, interactableLayer))
         {
            GameObject hitObject=hitInfo.collider.gameObject;
-            //if (hitObject.GetComponent<Outline>() != null)
             {
                 Outline outline = hitObject.GetComponent<Outline>();
                 outline.OutlineWidth = 10;
@@ -40,7 +38,6 @@ public class CameraView : MonoBehaviour
         if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward, out hitInfo, 20f, boxLayer))
         {
             GameObject hitObject = hitInfo.collider.gameObject;
-            //if (hitObject.GetComponent<Outline>() != null)
             {
                 Outline outline = hitObject.GetComponent<Outline>();
                 outline.OutlineWidth = 10;

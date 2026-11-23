@@ -3,40 +3,35 @@ using UnityEngine;
 
 namespace CryNet.HierarchyColorStudio
 {
-    /// <summary>
-    /// Serialized appearance and behaviour options for the Hierarchy decoration.
-    /// </summary>
+
     [Serializable]
     public sealed class AppearanceSettings
     {
-        /// <summary>Smallest supported marker size in points.</summary>
         public const float MinMarkerSize = 4f;
 
-        /// <summary>Largest supported marker size in points.</summary>
         public const float MaxMarkerSize = 14f;
 
-        /// <summary>Smallest supported row tint opacity.</summary>
         public const float MinTintOpacity = 0.04f;
 
-        /// <summary>Largest supported row tint opacity. Capped so row text stays readable.</summary>
+        
         public const float MaxTintOpacity = 0.65f;
 
-        /// <summary>Smallest supported label brightness multiplier.</summary>
+        
         public const float MinLabelBrightness = 0.5f;
 
-        /// <summary>Largest supported label brightness multiplier.</summary>
+        
         public const float MaxLabelBrightness = 1.6f;
 
-        /// <summary>Horizontal distance from the row rect to the GameObject name, in points.</summary>
+        
         public const float DefaultLabelOffset = 18f;
 
-        /// <summary>Smallest supported zebra stripe opacity.</summary>
+        
         public const float MinZebraOpacity = 0.02f;
 
-        /// <summary>Largest supported zebra stripe opacity. Capped so stripes never compete with colors.</summary>
+        
         public const float MaxZebraOpacity = 0.15f;
 
-        /// <summary>Default zebra stripe opacity.</summary>
+        
         public const float DefaultZebraOpacity = 0.05f;
 
         [SerializeField] private bool m_Enabled = true;
@@ -56,7 +51,7 @@ namespace CryNet.HierarchyColorStudio
         [SerializeField] private ApplyScope m_DefaultApplyScope = ApplyScope.SelectionOnly;
         [SerializeField] private bool m_DebugLogging;
 
-        // Added in schema 2. Their defaults leave the Hierarchy exactly as schema 1 drew it.
+        
         [SerializeField] private HierarchyMode m_Mode = HierarchyMode.Default;
         [SerializeField] private float m_ZebraOpacity = DefaultZebraOpacity;
         [SerializeField] private IconPlacement m_IconPlacement = IconPlacement.ObjectIcon;
@@ -65,66 +60,56 @@ namespace CryNet.HierarchyColorStudio
         [SerializeField] private TextColorSource m_TextColorSource = TextColorSource.ObjectColor;
         [SerializeField] private Color m_CustomTextColor = Color.white;
 
-        /// <summary>Master switch for the Hierarchy decoration.</summary>
         public bool Enabled
         {
             get => m_Enabled;
             set => m_Enabled = value;
         }
 
-        /// <summary>Which decorations are drawn.</summary>
         public HierarchyDecorations Decorations
         {
             get => m_Decorations;
             set => m_Decorations = value;
         }
 
-        /// <summary>Shape of the row marker.</summary>
         public MarkerShape MarkerShape
         {
             get => m_MarkerShape;
             set => m_MarkerShape = value;
         }
 
-        /// <summary>Placement of the row marker.</summary>
         public MarkerPlacement MarkerPlacement
         {
             get => m_MarkerPlacement;
             set => m_MarkerPlacement = value;
         }
 
-        /// <summary>Marker size in points.</summary>
         public float MarkerSize
         {
             get => m_MarkerSize;
             set => m_MarkerSize = Mathf.Clamp(value, MinMarkerSize, MaxMarkerSize);
         }
 
-        /// <summary>Opacity of the row tint.</summary>
         public float TintOpacity
         {
             get => m_TintOpacity;
             set => m_TintOpacity = Mathf.Clamp(value, MinTintOpacity, MaxTintOpacity);
         }
 
-        /// <summary>Horizontal extent of the row tint.</summary>
         public TintScope TintScope
         {
             get => m_TintScope;
             set => m_TintScope = value;
         }
 
-        /// <summary>Multiplier applied to the assigned color when re-drawing the row label.</summary>
+        
         public float LabelBrightness
         {
             get => m_LabelBrightness;
             set => m_LabelBrightness = Mathf.Clamp(value, MinLabelBrightness, MaxLabelBrightness);
         }
 
-        /// <summary>
-        /// Color in which <see cref="HierarchyDecorations.LabelColor"/> re-draws the names of colored objects:
-        /// each object's own color, or <see cref="CustomTextColor"/> for all of them.
-        /// </summary>
+        
         public TextColorSource TextColorSource
         {
             get => m_TextColorSource;

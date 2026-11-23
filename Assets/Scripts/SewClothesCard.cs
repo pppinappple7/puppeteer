@@ -1,7 +1,4 @@
-
 using UnityEngine;
-using UnityEngine.EventSystems;
-
 
 public class SewClothesCard : MonoBehaviour
 {
@@ -11,30 +8,19 @@ public class SewClothesCard : MonoBehaviour
     public Mesh mesh1;
     public Mesh mesh2;
     public Inventory inventory;
-    float doubleClickTimer = 0;
     public Sprite icon;
-    public string name;
-    void Start()
-    {
-        
-    }
+    public new string name;
 
-    // Update is called once per frame
-    void Update()
-    {
+    public Inventory.SewingClothes sewingClothes;
 
-    }
-    
-   
     public void Selected()
     {
-        Debug.Log("pressed");
-        sewResulter.clothes = true;
-        sewResulter.meshFilter1.mesh = mesh1;
-        sewResulter.meshFilter2.mesh = mesh2;
-        sewResulter.price = price;
-        sewResulter.type = type;
-        sewResulter.price = price;
-        sewResulter.icon = icon;
+        if (sewResulter == null || sewingClothes == null)
+        {
+            Debug.LogWarning("SewClothesCard: не назначена выкройка или SewResulter.", this);
+            return;
+        }
+
+        sewResulter.SelectClothes(sewingClothes);
     }
 }

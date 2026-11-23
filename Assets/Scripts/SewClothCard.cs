@@ -1,58 +1,37 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class SewClothCard : MonoBehaviour, IPointerClickHandler
+public class SewClothCard : MonoBehaviour
 {
     public bool accent;
     public SewResulter sewResulter;
+
     public int price;
     public MeshRenderer targetMesh;
     public Color color;
     public Inventory inventory;
-    float doubleClickTimer=0;
     public Sprite icon;
-    public string name;
-    
-    [SerializeField] TextMeshProUGUI ammountText;
-    public int ammount;
-    void Start()
-    {
-        
-    }
+    public new string name;
 
-    // Update is called once per frame
-    void Update()
-    {
-        ammountText.text=ammount.ToString();
-        
-        
-        if (doubleClickTimer > -10)
-        {
-            doubleClickTimer -= Time.deltaTime;
-        }
-        
-    }
-    
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            
-        }
-           
-    }
+    public Inventory.SewingCloth sewingCloth;
+    public int ammount;
+
+    [SerializeField] private TextMeshProUGUI ammountText;
+
     public void Select()
     {
-        targetMesh.material.color= color;
-        Debug.Log(price);
-        if (!accent)
+        if (sewResulter == null || sewingCloth == null)
         {
-            sewResulter.price1= price;
+            Debug.LogWarning("SewClothCard: не назначена ткань или SewResulter.", this);
+            return;
         }
-        else
-        {
-            sewResulter.price2 = price;
-        }
+
+        sewResulter.SelectCloth(sewingCloth, accent);
+    }
+
+    public void UpdateAmountText()
+    {
+        if (ammountText != null)
+            ammountText.text = ammount.ToString();
     }
 }

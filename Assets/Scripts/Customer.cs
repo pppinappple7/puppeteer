@@ -1,27 +1,29 @@
-
 using TMPro;
 using UnityEngine;
-using static Customer;
-
 
 public class Customer : MonoBehaviour
 {
-    [SerializeField] float requiredPercent;
+    [SerializeField, Range(0f, 1f)] float requiredPercent;
+
+    [System.Serializable]
     public class Requirement
     {
         public string objName;
         public bool clothes;
     }
+
     [System.Serializable]
     public class ColorRequirement : Requirement
     {
         public Color color;
     }
+
     [System.Serializable]
     public class MeshRequirement : Requirement
     {
         public Mesh mesh;
     }
+
     [SerializeField] ColorRequirement[] colorRequirements;
     [SerializeField] MeshRequirement[] meshRequirements;
     [SerializeField] GameObject doll;
@@ -29,184 +31,235 @@ public class Customer : MonoBehaviour
 
     public int payment;
     public int goods;
-    bool over=false;
+
+    bool over;
     bool good;
-    bool gotDolled=false;
+    bool gotDolled;
+    bool taken;
+
     SpriteRenderer spriteRenderer;
     UIShower selfUI;
+
     [SerializeField] UIShower uiShower;
     [SerializeField] float letterPeriod = 0.1f;
     float speechTimer;
     [SerializeField] TextMeshProUGUI Speech;
+
     public int curentText;
     public bool shown;
-    bool taken;
+
     [SerializeField] string[] order;
     [SerializeField] string[] gratitude;
     [SerializeField] string[] neutral;
+
     void Start()
     {
-        
-        shown=true; taken=false;
+        shown = true;
+        taken = false;
+
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.color = new Color(100, 100, 100, 0);
         selfUI = GetComponent<UIShower>();
-        Speech.maxVisibleCharacters = 0;
-        Speech.text = order[curentText];
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        Color color = spriteRenderer.color;
-        if (shown)
+        if (spriteRenderer != null)
+            spriteRenderer.color = new Color(100f, 100f, 100f, 0f);
+
+        if (Speech != null)
         {
-            
-
-            color.a = Mathf.MoveTowards(
-                color.a,
-                shown ? 1f : 0f,
-                5f * Time.deltaTime
-            );
-            selfUI.shown = true;
-            speechTimer += Time.deltaTime;
-            if (speechTimer > letterPeriod)
-            {
-                Speech.maxVisibleCharacters += 1;
-                speechTimer = 0;
-            }
+            Speech.maxVisibleCharacters = 0;
+            Speech.text = GetLine(order, 0);
         }
         else
         {
-            Speech.text = "";
-            curentText = 0;
-            selfUI.shown = false;
-            color.a = Mathf.MoveTowards(
-            color.a,
-            shown ? 1f : 0f,
-            5f * Time.deltaTime
-            );
+            Debug.LogWarning("Customer has no speech text assigned.", this);
         }
-        spriteRenderer.color = color;
-        
-        if ((!taken || gotDolled) && shown)
+
+        if (selfUI == null)
+            Debug.LogWarning("Customer has no UIShower component.", this);
+    }
+
+    void Update()
+    {
+        if (spriteRenderer != null)
         {
-            uiShower.shown = false;
+            Color color = spriteRenderer.color;
+
+            if (shown)
+            {
+                color.a = Mathf.MoveTowards(color.a, 1f, 5f * Time.deltaTime);
+
+                if (selfUI != null)
+                    selfUI.shown = true;
+
+                speechTimer += Time.deltaTime;
+                if (Speech != null && letterPeriod > 0f && speechTimer > letterPeriod)
+                {
+                    Speech.maxVisibleCharacters++;
+                    speechTimer = 0f;
+                }
+            }
+            else
+            {
+                if (Speech != null)
+                    Speech.text = "";
+
+                curentText = 0;
+
+                if (selfUI != null)
+                    selfUI.shown = false;
+
+                color.a = Mathf.MoveTowards(color.a, 0f, 5f * Time.deltaTime);
+            }
+
+            spriteRenderer.color = color;
         }
+
+        if ((!taken || gotDolled) && shown && uiShower != null)
+            uiShower.shown = false;
+
         if (over)
         {
             shown = false;
-            if (spriteRenderer.color.a <= 0f)
-            {
+            if (spriteRenderer == null || spriteRenderer.color.a <= 0f)
                 Destroy(gameObject);
-            }
         }
-        doll.SetActive(uiShower.shown);
+
+        if (doll != null)
+            doll.SetActive(uiShower != null && uiShower.shown);
     }
-    private void LateUpdate()
-    {
-        
-    }
+
     public void Next()
     {
         curentText++;
-        Speech.maxVisibleCharacters = 0;
+
+        if (Speech != null)
+            Speech.maxVisibleCharacters = 0;
+
         if (!taken)
         {
-            
-            if (curentText > order.Length - 1)
+            if (order == null || curentText >= order.Length)
             {
                 taken = true;
-            }
-            if (!taken)
-            {
-                Speech.text = order[curentText];
-            }
-            else
-            {
                 shown = false;
-                Speech.text = "";
+                if (Speech != null)
+                    Speech.text = "";
+                return;
             }
+
+            if (Speech != null)
+                Speech.text = order[curentText];
         }
         else if (gotDolled)
         {
-            shown=true;
-            if (good)
-            {
-                if (curentText > gratitude.Length - 1)
-                {
-                    over = true;
-                    shown = false;
-                    return;
-                }
-                Speech.text = gratitude[curentText];
+            shown = true;
+            string[] reaction = good ? gratitude : neutral;
 
-            }
-            else
+            if (reaction == null || curentText >= reaction.Length)
             {
-                if (curentText > gratitude.Length - 1)
-                {
-                    over = true;
-                    shown = false;
-                    return;
-                }
-                Speech.text = neutral[curentText];
+                over = true;
+                shown = false;
+                return;
             }
+
+            if (Speech != null)
+                Speech.text = reaction[curentText];
         }
-
     }
-    public void GetDolled(GameObject doll)
+
+    public void GetDolled(GameObject dollToEvaluate)
     {
-        good = false;
-        payment = 0;
-        goods = 0;
-        foreach(PartPicker partPicker in doll.GetComponentsInChildren<PartPicker>())
+        if (gotDolled)
+            return;
+
+        if (inventory == null)
         {
-            payment += (int)(partPicker.price * 0.5f);
+            Debug.LogWarning("Customer cannot complete the order: Inventory is not assigned.", this);
+            return;
         }
-        foreach (Pricer price in doll.GetComponentsInChildren<Pricer>())
+
+        if (inventory.moneyCounter == null)
         {
-            payment += (int)(price.price * 0.5f);
+            Debug.LogWarning("Customer cannot complete the order: moneyCounter is not assigned.", this);
+            return;
         }
+
+        DollEvaluationResult result = DollEvaluator.Evaluate(
+            dollToEvaluate,
+            colorRequirements,
+            meshRequirements,
+            requiredPercent);
+
+        if (!result.IsValid)
+        {
+            Debug.LogWarning("Customer could not evaluate the doll: " + result.Error, this);
+            return;
+        }
+
+        int reward = result.IsGood
+            ? (int)(result.Payment * 1.1f)
+            : result.Payment;
+
+        long updatedMoney = (long)inventory.money + reward;
+        if (updatedMoney > int.MaxValue || updatedMoney < int.MinValue)
+        {
+            Debug.LogWarning("Customer cannot complete the order: money value would overflow.", this);
+            return;
+        }
+
+        if (dollToEvaluate == null)
+        {
+            Debug.LogWarning("Customer cannot complete the order: doll reference is missing.", this);
+            return;
+        }
+
+        DollAssembly assembly = dollToEvaluate.GetComponent<DollAssembly>();
+        if (assembly == null)
+            assembly = dollToEvaluate.GetComponentInChildren<DollAssembly>(true);
+
+        if (assembly == null)
+        {
+            Debug.LogWarning("Customer cannot complete the order: DollAssembly is missing from the doll.", this);
+            return;
+        }
+
+        if (!assembly.TryCompleteOrder(inventory, out string assemblyError))
+        {
+            Debug.LogWarning("Customer could not consume the installed items: " + assemblyError, this);
+            return;
+        }
+
+        payment = result.Payment;
+        goods = result.MatchedRequirements;
+        good = result.IsGood;
+
+        inventory.money = (int)updatedMoney;
+        inventory.moneyCounter.transform.localScale *= 2f;
+
         gotDolled = true;
-        
-        foreach (ColorRequirement requirement in colorRequirements)
-        {
-            
-            if (doll.transform.Find(requirement.objName).GetComponent<MeshRenderer>().material.color == requirement.color)
-            {
-
-                goods++;
-            }
-
-        }
-        foreach(MeshRequirement requirement1 in meshRequirements)
-        {
-            if (doll.transform.Find(requirement1.objName).GetComponent<MeshFilter>().mesh == requirement1.mesh)
-            {
-                goods++;
-            }
-        }
-        if(goods/(colorRequirements.Length+meshRequirements.Length)>=requiredPercent)
-        {
-            good = true;
-        }
         curentText = 0;
-        if (good)
+        shown = true;
+
+        string[] reaction = good ? gratitude : neutral;
+        if (reaction != null && reaction.Length > 0)
         {
-            Speech.text = gratitude[curentText];
-            inventory.money += (int)(payment * 1.1f);
+            if (Speech != null)
+            {
+                Speech.maxVisibleCharacters = 0;
+                Speech.text = reaction[0];
+            }
         }
         else
         {
-            Speech.text = neutral[curentText];
-            inventory.money += (int)(payment * 1f);
+            over = true;
+            shown = false;
+            Debug.LogWarning("Customer has no reaction dialogue configured.", this);
         }
-
-            
-        inventory.moneyCounter.transform.localScale *= 2;
-        gotDolled = true;
-        shown = true;
     }
-    
+
+    string GetLine(string[] lines, int index)
+    {
+        if (lines == null || index < 0 || index >= lines.Length)
+            return "";
+
+        return lines[index];
+    }
 }

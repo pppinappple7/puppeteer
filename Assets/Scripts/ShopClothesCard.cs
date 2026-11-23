@@ -1,7 +1,5 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
 
 public class ShopClothesCard : MonoBehaviour, IPointerClickHandler
 {
@@ -11,100 +9,60 @@ public class ShopClothesCard : MonoBehaviour, IPointerClickHandler
     public Mesh mesh1;
     public Mesh mesh2;
     public Inventory inventory;
-    float doubleClickTimer = 0;
+    float doubleClickTimer;
     public Sprite preview;
     public Sprite icon;
     public GameObject previewObj;
-    
     public int price;
+
     void Start()
     {
-        foreach (var item in inventory.cart)
-        {
-            Debug.Log("aa");
-            if (item.name == name)
-            {
-                Debug.Log("found");
-                countObj.SetActive(true);
-                countObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = item.ammount.ToString();
-
-            }
-            else
-            {
-                countObj.SetActive(false);
-                Debug.Log("not found");
-            }
-        }
+        RefreshCount();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (doubleClickTimer > -10)
-        {
+        if (doubleClickTimer > -10f)
             doubleClickTimer -= Time.deltaTime;
-        }
-
     }
+
+    public void Configure(Inventory targetInventory, GameObject targetPreview, string itemName,
+        int itemPrice, string itemType, Mesh firstMesh, Mesh secondMesh, Sprite itemIcon, Sprite itemPreview)
+    {
+        inventory = targetInventory;
+        previewObj = targetPreview;
+        name = itemName;
+        price = itemPrice;
+        type = itemType;
+        mesh1 = firstMesh;
+        mesh2 = secondMesh;
+        icon = itemIcon;
+        preview = itemPreview;
+    }
+
     public void open()
     {
         if (doubleClickTimer > 0f)
         {
-            countObj.SetActive(true);
-            bool isInCart = false;
-            foreach (var item in inventory.cart)
-            {
-                if (item.name == name)
-                {
-                    item.ammount = 1;
-                    isInCart = true;
-                    countObj.SetActive(true);
-                    countObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = item.ammount.ToString();
-                }
-            }
-            if (!isInCart)
-            {
-                countObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "1";
-                inventory.cart.Add(new Inventory.ShopClothes
-                {
-                    icon =icon,
-                    name = name,
-                    price = price,
-                    mesh1 = mesh1,
-                    mesh2 = mesh2,
-                    ammount = 1,
-                    type = type,
-
-                });
-            }
+            ShopCartUtility.AddClothes(inventory, name, price, icon, type, mesh1, mesh2);
+            RefreshCount();
         }
+
         doubleClickTimer = 0.25f;
-        previewObj.GetComponent<UnityEngine.UI.Image>().sprite = preview;
-        previewObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = name;
-        previewObj.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = price.ToString();
+        ShopCartUtility.ShowPreview(previewObj, preview, name, price);
     }
+
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            foreach (var item in inventory.cart)
-            {
-                if (item.name == name)
-                {
-                    item.ammount--;
-                    if (item.ammount <= 0)
-                    {
+        if (eventData.button != PointerEventData.InputButton.Right)
+            return;
 
-                        item.ammount = 0;
-                        inventory.cart.Remove(item);
-                        countObj.SetActive(false);
-                    }
+        int amount = ShopCartUtility.RemoveOne(inventory, name);
+        ShopCartUtility.SetCount(countObj, amount);
+    }
 
-                    countObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = item.ammount.ToString();
-                    return;
-                }
-            }
-        }
-
+    void RefreshCount()
+    {
+        ShopCartUtility.SetCount(countObj, ShopCartUtility.GetAmount(inventory, name));
     }
 }
