@@ -1,0 +1,18 @@
+[33m1f9a26b7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mVisual-Editing[m[33m, [m[1;31morigin/Visual-Editing[m[33m)[m HEAD@{0}: reset: moving to HEAD~2
+[33m34d9b6eb[m HEAD@{1}: commit: рефактор
+[33m9b2a2fc2[m HEAD@{2}: commit: полный цикл создания
+[33m1f9a26b7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mVisual-Editing[m[33m, [m[1;31morigin/Visual-Editing[m[33m)[m HEAD@{3}: pull: Fast-forward
+[33m313864ce[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{4}: checkout: moving from main to Visual-Editing
+[33m313864ce[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{5}: reset: moving to origin/main
+[33m313864ce[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{6}: reset: moving to main
+[33m313864ce[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{7}: checkout: moving from Visual-Editing to main
+[33m313864ce[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{8}: reset: moving to main
+[33m93c6f226[m HEAD@{9}: checkout: moving from main to Visual-Editing
+[33m313864ce[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{10}: commit: сборка готова
+[33ma5883cb8[m HEAD@{11}: commit: убрал лишний бекап
+[33mce704393[m HEAD@{12}: reset: moving to origin/main
+[33m57a2d683[m HEAD@{13}: commit: повторный комит
+[33m8706293d[m HEAD@{14}: commit: Закончил базу по сшиванию
+[33m940d58d0[m HEAD@{15}: commit: Начало пошива
+[33m7d957eb0[m HEAD@{16}: commit: новая комната, закупка, коробки, прикольный огонь в камине
+[33mce704393[m HEAD@{17}: commit: лейаут и перемещение по комнате
