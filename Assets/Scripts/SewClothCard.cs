@@ -22,7 +22,6 @@ public class SewClothCard : MonoBehaviour
     {
         if (sewResulter == null || sewingCloth == null)
         {
-            Debug.LogWarning("SewClothCard: не назначена ткань или SewResulter.", this);
             return;
         }
 

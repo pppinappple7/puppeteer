@@ -21,7 +21,6 @@ public class SewSetUp : MonoBehaviour
     {
         if (inventory == null)
         {
-            Debug.LogError("SewSetUp: Inventory не назначен.", this);
             return;
         }
 
@@ -84,7 +83,6 @@ public class SewSetUp : MonoBehaviour
 
         if (card == null)
         {
-            Debug.LogError("В prefab ткани отсутствует SewClothCard.", spawnedCard);
             Destroy(spawnedCard);
             return;
         }
@@ -117,7 +115,6 @@ public class SewSetUp : MonoBehaviour
 
         if (card == null)
         {
-            Debug.LogError("В prefab выкройки отсутствует SewPatternCard.", spawnedCard);
             Destroy(spawnedCard);
             return;
         }
@@ -147,7 +144,6 @@ public class SewSetUp : MonoBehaviour
 
         if (card == null)
         {
-            Debug.LogError("В prefab одежды отсутствует SewClothesCard.", spawnedCard);
             Destroy(spawnedCard);
             return;
         }

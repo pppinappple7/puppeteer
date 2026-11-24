@@ -4,27 +4,18 @@ using UnityEngine.UI;
 
 public static class ShopCartUtility
 {
-    public static int GetAmount(Inventory inventory, string itemName)
+    public static int GetAmount(Inventory inventory, string itemName, string itemId = null)
     {
-        if (inventory == null || inventory.cart == null)
-            return 0;
-
-        for (int i = 0; i < inventory.cart.Count; i++)
-        {
-            Inventory.ShopItem item = inventory.cart[i];
-            if (item != null && item.name == itemName)
-                return Mathf.Max(0, item.ammount);
-        }
-
-        return 0;
+        Inventory.ShopItem item = FindItem(inventory, itemId, itemName);
+        return item == null ? 0 : Mathf.Max(0, item.ammount);
     }
 
-    public static void AddCloth(Inventory inventory, string itemName, int price, Sprite icon, Color color)
+    public static void AddCloth(Inventory inventory, string itemName, int price, Sprite icon, Color color, string itemId = null)
     {
         if (inventory == null || inventory.cart == null)
             return;
 
-        Inventory.ShopItem existingItem = FindByName(inventory, itemName);
+        Inventory.ShopItem existingItem = FindItem(inventory, itemId, itemName);
         if (existingItem != null)
         {
             if (existingItem.ammount < int.MaxValue)
@@ -34,6 +25,7 @@ public static class ShopCartUtility
 
         inventory.cart.Add(new Inventory.ShopCloth
         {
+            itemId = itemId,
             name = itemName,
             price = price,
             icon = icon,
@@ -42,12 +34,12 @@ public static class ShopCartUtility
         });
     }
 
-    public static void AddPattern(Inventory inventory, string itemName, int price, Sprite icon, string type, Mesh mesh)
+    public static void AddPattern(Inventory inventory, string itemName, int price, Sprite icon, string type, Mesh mesh, string itemId = null)
     {
         if (inventory == null || inventory.cart == null)
             return;
 
-        Inventory.ShopItem existingItem = FindByName(inventory, itemName);
+        Inventory.ShopItem existingItem = FindItem(inventory, itemId, itemName);
         if (existingItem != null)
         {
             existingItem.ammount = 1;
@@ -56,6 +48,7 @@ public static class ShopCartUtility
 
         inventory.cart.Add(new Inventory.ShopPart
         {
+            itemId = itemId,
             name = itemName,
             price = price,
             icon = icon,
@@ -65,12 +58,12 @@ public static class ShopCartUtility
         });
     }
 
-    public static void AddClothes(Inventory inventory, string itemName, int price, Sprite icon, string type, Mesh mesh1, Mesh mesh2)
+    public static void AddClothes(Inventory inventory, string itemName, int price, Sprite icon, string type, Mesh mesh1, Mesh mesh2, string itemId = null)
     {
         if (inventory == null || inventory.cart == null)
             return;
 
-        Inventory.ShopItem existingItem = FindByName(inventory, itemName);
+        Inventory.ShopItem existingItem = FindItem(inventory, itemId, itemName);
         if (existingItem != null)
         {
             existingItem.ammount = 1;
@@ -79,6 +72,7 @@ public static class ShopCartUtility
 
         inventory.cart.Add(new Inventory.ShopClothes
         {
+            itemId = itemId,
             name = itemName,
             price = price,
             icon = icon,
@@ -89,28 +83,23 @@ public static class ShopCartUtility
         });
     }
 
-    public static int RemoveOne(Inventory inventory, string itemName)
+    public static int RemoveOne(Inventory inventory, string itemName, string itemId = null)
     {
         if (inventory == null || inventory.cart == null)
             return 0;
 
-        for (int i = 0; i < inventory.cart.Count; i++)
+        Inventory.ShopItem item = FindItem(inventory, itemId, itemName);
+        if (item == null)
+            return 0;
+
+        item.ammount--;
+        if (item.ammount <= 0)
         {
-            Inventory.ShopItem item = inventory.cart[i];
-            if (item == null || item.name != itemName)
-                continue;
-
-            item.ammount--;
-            if (item.ammount <= 0)
-            {
-                inventory.cart.RemoveAt(i);
-                return 0;
-            }
-
-            return item.ammount;
+            inventory.cart.Remove(item);
+            return 0;
         }
 
-        return 0;
+        return item.ammount;
     }
 
     public static void SetCount(GameObject countObject, int amount)
@@ -152,13 +141,26 @@ public static class ShopCartUtility
         }
     }
 
-    private static Inventory.ShopItem FindByName(Inventory inventory, string itemName)
+    private static Inventory.ShopItem FindItem(Inventory inventory, string itemId, string itemName)
     {
+        if (inventory == null || inventory.cart == null)
+            return null;
+
         for (int i = 0; i < inventory.cart.Count; i++)
         {
             Inventory.ShopItem item = inventory.cart[i];
-            if (item != null && item.name == itemName)
+            if (item == null)
+                continue;
+
+            if (!string.IsNullOrWhiteSpace(itemId))
+            {
+                if (item.itemId == itemId)
+                    return item;
+            }
+            else if (item.name == itemName)
+            {
                 return item;
+            }
         }
 
         return null;

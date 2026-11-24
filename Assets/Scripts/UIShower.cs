@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class UIShower : MonoBehaviour
 {
+    [SerializeField] float speed=6;
     CanvasGroup canvasGroup;
     public bool shown;
     void Start()
@@ -17,7 +18,7 @@ public class UIShower : MonoBehaviour
             if (canvasGroup.interactable)
             {
                 canvasGroup.blocksRaycasts = true;
-                canvasGroup.alpha += 6 * Time.deltaTime;
+                canvasGroup.alpha += speed * Time.deltaTime;
             }
 
                 canvasGroup.interactable=true;
@@ -27,7 +28,7 @@ public class UIShower : MonoBehaviour
             if (!canvasGroup.interactable)
             {
                 canvasGroup.blocksRaycasts = false;
-                canvasGroup.alpha -= 6 * Time.deltaTime;
+                canvasGroup.alpha -= speed * Time.deltaTime;
             }
                 
             canvasGroup.interactable = false;

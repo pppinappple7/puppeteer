@@ -17,13 +17,18 @@ public class ShowUIInZone : MonoBehaviour
     {
         if (other.CompareTag("UIZone"))
         {
+            Debug.Log("Inv");
             other.GetComponent<UIZone>().unityEvent?.Invoke();
-            other.GetComponent<UIZone>().UIObject.GetComponent<UIShower>().shown = true;
+            if (other.GetComponent<UIZone>().UIObject != null)
+            {
+                other.GetComponent<UIZone>().UIObject.GetComponent<UIShower>().shown = true;
+            }
+                
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("UIZone"))
+        if (other.CompareTag("UIZone") && other.GetComponent<UIZone>().UIObject!=null)
         {
             other.GetComponent<UIZone>().UIObject.GetComponent<UIShower>().shown = false;
         }

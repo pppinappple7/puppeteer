@@ -14,13 +14,13 @@ public class ShopSetUp : MonoBehaviour
     [SerializeField] GameObject previewObj;
     [SerializeField] Inventory inventory;
 
-    [Header("Additional data catalog")]
+    [Header("Product catalog")]
     [SerializeField] ShopCatalog catalog;
 
     [System.Serializable]
     public class ClothInfo
     {
-        [Header("Legacy product data")]
+        public string itemId;
         public string name;
         public Color color;
         public int price;
@@ -31,6 +31,7 @@ public class ShopSetUp : MonoBehaviour
     [System.Serializable]
     public class PatternInfo
     {
+        public string itemId;
         public string type;
         public string name;
         public Mesh mesh;
@@ -42,6 +43,7 @@ public class ShopSetUp : MonoBehaviour
     [System.Serializable]
     public class ClothesInfo
     {
+        public string itemId;
         public string type;
         public string name;
         public Mesh mesh1;
@@ -50,10 +52,6 @@ public class ShopSetUp : MonoBehaviour
         public Sprite icon;
         public Sprite preview;
     }
-
-    [SerializeField] ClothInfo[] clothInfos;
-    [SerializeField] PatternInfo[] patternInfos;
-    [SerializeField] ClothesInfo[] clothesInfos;
 
     readonly List<GameObject> spawnedCards = new List<GameObject>();
 
@@ -66,168 +64,159 @@ public class ShopSetUp : MonoBehaviour
     {
         ClearSpawnedCards();
 
-        int clothIndex = 0;
-        int patternIndex = 0;
-        int clothesIndex = 0;
-
-        if (clothInfos != null)
-        {
-            foreach (ClothInfo info in clothInfos)
-            {
-                if (info == null || string.IsNullOrWhiteSpace(info.name) || info.price < 0)
-                {
-                    Debug.LogWarning("ShopSetUp: skipped invalid legacy cloth entry.", this);
-                    continue;
-                }
-
-                CreateClothCard(info.name, info.price, info.color, info.icon, info.preview, clothIndex++);
-            }
-        }
-
-        if (patternInfos != null)
-        {
-            foreach (PatternInfo info in patternInfos)
-            {
-                if (info == null || string.IsNullOrWhiteSpace(info.name) ||
-                    string.IsNullOrWhiteSpace(info.type) || info.mesh == null || info.price < 0)
-                {
-                    Debug.LogWarning("ShopSetUp: skipped invalid legacy pattern entry.", this);
-                    continue;
-                }
-
-                CreatePatternCard(info.name, info.price, info.type, info.mesh, info.icon, info.preview, patternIndex++);
-            }
-        }
-
-        if (clothesInfos != null)
-        {
-            foreach (ClothesInfo info in clothesInfos)
-            {
-                if (info == null || string.IsNullOrWhiteSpace(info.name) ||
-                    string.IsNullOrWhiteSpace(info.type) || info.mesh1 == null || info.mesh2 == null || info.price < 0)
-                {
-                    Debug.LogWarning("ShopSetUp: skipped invalid legacy clothes entry.", this);
-                    continue;
-                }
-
-                CreateClothesCard(info.name, info.price, info.type, info.mesh1, info.mesh2,
-                    info.icon, info.preview, clothesIndex++);
-            }
-        }
-
-        if (catalog == null || catalog.Items == null)
+        if (catalog == null || inventory == null)
             return;
 
-        foreach (ShopProductData item in catalog.Items)
+        CreateClothCards();
+        CreatePatternCards();
+        CreateClothesCards();
+    }
+
+    void CreateClothCards()
+    {
+        if (catalog.ClothInfos == null)
+            return;
+
+        int index = 0;
+
+        foreach (ClothInfo info in catalog.ClothInfos)
         {
-            if (item == null)
-            {
-                Debug.LogWarning("ShopSetUp: skipped an empty catalog entry.", this);
+            if (!IsValid(info))
                 continue;
-            }
 
-            if (!item.TryValidate(out string error))
-            {
-                Debug.LogWarning("ShopSetUp: skipped catalog item. " + error, this);
-                continue;
-            }
-
-            switch (item.ProductType)
-            {
-                case ShopProductType.Cloth:
-                    CreateClothCard(item.ProductName, item.Price, item.Color, item.Icon, item.Preview, clothIndex++);
-                    break;
-
-                case ShopProductType.Pattern:
-                    CreatePatternCard(item.ProductName, item.Price, item.Type, item.Mesh,
-                        item.Icon, item.Preview, patternIndex++);
-                    break;
-
-                case ShopProductType.Clothes:
-                    CreateClothesCard(item.ProductName, item.Price, item.Type, item.Mesh,
-                        item.SecondMesh, item.Icon, item.Preview, clothesIndex++);
-                    break;
-            }
+            CreateClothCard(info, index++);
         }
     }
 
-    void CreateClothCard(string itemName, int itemPrice, Color itemColor,
-        Sprite itemIcon, Sprite itemPreview, int index)
+    void CreatePatternCards()
     {
-        if (!CanCreate(clothCardPrefub, clothContentBox, "cloth"))
+        if (catalog.PatternInfos == null)
+            return;
+
+        int index = 0;
+
+        foreach (PatternInfo info in catalog.PatternInfos)
+        {
+            if (!IsValid(info))
+                continue;
+
+            CreatePatternCard(info, index++);
+        }
+    }
+
+    void CreateClothesCards()
+    {
+        if (catalog.ClothesInfos == null)
+            return;
+
+        int index = 0;
+
+        foreach (ClothesInfo info in catalog.ClothesInfos)
+        {
+            if (!IsValid(info))
+                continue;
+
+            CreateClothesCard(info, index++);
+        }
+    }
+
+    void CreateClothCard(ClothInfo info, int index)
+    {
+        if (!CanCreate(clothCardPrefub, clothContentBox))
             return;
 
         GameObject cardObject = Instantiate(clothCardPrefub, clothContentBox);
-        spawnedCards.Add(cardObject);
-        cardObject.transform.SetAsFirstSibling();
-        SetCardPosition(cardObject, index);
-
         ShopClothCard card = cardObject.GetComponent<ShopClothCard>();
+
         if (card == null)
         {
-            Debug.LogError("ShopSetUp: cloth prefab has no ShopClothCard component.", cardObject);
             Destroy(cardObject);
             return;
         }
 
-        card.Configure(inventory, previewObj, itemName, itemPrice, itemColor, itemIcon, itemPreview);
-        SetCardIcon(cardObject, itemIcon);
+        spawnedCards.Add(cardObject);
+        cardObject.transform.SetAsFirstSibling();
+        SetCardPosition(cardObject, index);
+        card.Configure(inventory, previewObj, info.name, info.price, info.color, info.icon, info.preview, info.itemId);
+        SetCardIcon(cardObject, info.icon);
     }
 
-    void CreatePatternCard(string itemName, int itemPrice, string itemType, Mesh itemMesh,
-        Sprite itemIcon, Sprite itemPreview, int index)
+    void CreatePatternCard(PatternInfo info, int index)
     {
-        if (!CanCreate(patternCardPrefub, patternContentBox, "pattern"))
+        if (!CanCreate(patternCardPrefub, patternContentBox))
             return;
 
         GameObject cardObject = Instantiate(patternCardPrefub, patternContentBox);
-        spawnedCards.Add(cardObject);
-        cardObject.transform.SetAsFirstSibling();
-        SetCardPosition(cardObject, index);
-
         ShopPatternCard card = cardObject.GetComponent<ShopPatternCard>();
+
         if (card == null)
         {
-            Debug.LogError("ShopSetUp: pattern prefab has no ShopPatternCard component.", cardObject);
             Destroy(cardObject);
             return;
         }
 
-        card.Configure(inventory, previewObj, itemName, itemPrice, itemType, itemMesh, itemIcon, itemPreview);
-        SetCardIcon(cardObject, itemIcon);
+        spawnedCards.Add(cardObject);
+        cardObject.transform.SetAsFirstSibling();
+        SetCardPosition(cardObject, index);
+        card.Configure(inventory, previewObj, info.name, info.price, info.type, info.mesh,
+            info.icon, info.preview, info.itemId);
+        SetCardIcon(cardObject, info.icon);
     }
 
-    void CreateClothesCard(string itemName, int itemPrice, string itemType, Mesh firstMesh,
-        Mesh secondMesh, Sprite itemIcon, Sprite itemPreview, int index)
+    void CreateClothesCard(ClothesInfo info, int index)
     {
-        if (!CanCreate(clothesCardPrefub, clothesContentBox, "clothes"))
+        if (!CanCreate(clothesCardPrefub, clothesContentBox))
             return;
 
         GameObject cardObject = Instantiate(clothesCardPrefub, clothesContentBox);
-        spawnedCards.Add(cardObject);
-        cardObject.transform.SetAsFirstSibling();
-        SetCardPosition(cardObject, index);
-
         ShopClothesCard card = cardObject.GetComponent<ShopClothesCard>();
+
         if (card == null)
         {
-            Debug.LogError("ShopSetUp: clothes prefab has no ShopClothesCard component.", cardObject);
             Destroy(cardObject);
             return;
         }
 
-        card.Configure(inventory, previewObj, itemName, itemPrice, itemType,
-            firstMesh, secondMesh, itemIcon, itemPreview);
-        SetCardIcon(cardObject, itemIcon);
+        spawnedCards.Add(cardObject);
+        cardObject.transform.SetAsFirstSibling();
+        SetCardPosition(cardObject, index);
+        card.Configure(inventory, previewObj, info.name, info.price, info.type,
+            info.mesh1, info.mesh2, info.icon, info.preview, info.itemId);
+        SetCardIcon(cardObject, info.icon);
     }
 
-    bool CanCreate(GameObject prefab, Transform content, string itemType)
+    static bool IsValid(ClothInfo info)
     {
-        if (prefab != null && content != null && inventory != null)
-            return true;
+        return info != null &&
+               !string.IsNullOrWhiteSpace(info.itemId) &&
+               !string.IsNullOrWhiteSpace(info.name) &&
+               info.price >= 0;
+    }
 
-        Debug.LogError("ShopSetUp: missing prefab, content container or Inventory for " + itemType + " cards.", this);
-        return false;
+    static bool IsValid(PatternInfo info)
+    {
+        return info != null &&
+               !string.IsNullOrWhiteSpace(info.itemId) &&
+               !string.IsNullOrWhiteSpace(info.name) &&
+               !string.IsNullOrWhiteSpace(info.type) &&
+               info.mesh != null &&
+               info.price >= 0;
+    }
+
+    static bool IsValid(ClothesInfo info)
+    {
+        return info != null &&
+               !string.IsNullOrWhiteSpace(info.itemId) &&
+               !string.IsNullOrWhiteSpace(info.name) &&
+               !string.IsNullOrWhiteSpace(info.type) &&
+               info.mesh1 != null &&
+               info.mesh2 != null &&
+               info.price >= 0;
+    }
+
+    bool CanCreate(GameObject prefab, Transform content)
+    {
+        return prefab != null && content != null && inventory != null;
     }
 
     static void SetCardIcon(GameObject cardObject, Sprite icon)

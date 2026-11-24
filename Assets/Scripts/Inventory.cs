@@ -12,7 +12,10 @@ public class Inventory : MonoBehaviour
     public int money;
 
     [System.Serializable]
-    public abstract class combining { }
+    public abstract class combining
+    {
+        public string itemId;
+    }
 
     [System.Serializable]
     public class Part : combining
@@ -36,10 +39,10 @@ public class Inventory : MonoBehaviour
         public Sprite icon;
     }
 
-    #region Sewing classes
     [System.Serializable]
     public class SewingItem
     {
+        public string itemId;
         public Sprite icon;
         public string name;
     }
@@ -69,12 +72,11 @@ public class Inventory : MonoBehaviour
         public Mesh mesh1;
         public Mesh mesh2;
     }
-    #endregion
 
-    #region Shop classes
     [System.Serializable]
     public class ShopItem
     {
+        public string itemId;
         public Sprite icon;
         public int ammount;
         public string name;
@@ -101,7 +103,6 @@ public class Inventory : MonoBehaviour
         public Mesh mesh2;
         public string type;
     }
-    #endregion
 
     [SerializeReference] public List<ShopItem> cart = new List<ShopItem>();
     [SerializeReference] public List<SewingItem> sewings = new List<SewingItem>();
@@ -123,7 +124,6 @@ public class Inventory : MonoBehaviour
             moneyText.text = money.ToString();
     }
 
-    
     public void Buy()
     {
         ShopPurchaseService.TryBuy(this);

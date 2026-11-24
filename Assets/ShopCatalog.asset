@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3891447e0a52db24e843e5219084f68d, type: 3}
+  m_Name: ShopCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::ShopCatalog
+  clothInfos:
+  - itemId: red
+    name: red
+    color: {r: 1, g: 0, b: 0, a: 1}
+    price: 10
+    icon: {fileID: 21300000, guid: 109e1ce8fda776f40b2efce939004cf6, type: 3}
+    preview: {fileID: 21300000, guid: 109e1ce8fda776f40b2efce939004cf6, type: 3}
+  - itemId: blu
+    name: blu
+    color: {r: 0, g: 0.51888084, b: 1, a: 1}
+    price: 20
+    icon: {fileID: 21300000, guid: a61e76b4597fe9a498d98a7895b32968, type: 3}
+    preview: {fileID: 21300000, guid: a61e76b4597fe9a498d98a7895b32968, type: 3}
+  patternInfos:
+  - itemId: head_s
+    type: head
+    name: head
+    mesh: {fileID: -8839368762345780380, guid: 6154b48672313f6498fc0cca0df91a5f, type: 3}
+    price: 30
+    icon: {fileID: 21300000, guid: 2ea9a0f7d912afb45adbd6bf67f35f91, type: 3}
+    preview: {fileID: 21300000, guid: 2ea9a0f7d912afb45adbd6bf67f35f91, type: 3}
+  - itemId: head_m
+    type: head
+    name: head mew
+    mesh: {fileID: -8839368762345780380, guid: a340a8ce8b55717479db3a57dbb4c4f9, type: 3}
+    price: 60
+    icon: {fileID: 21300000, guid: 318c0c77586682c4b8ddb08c16a19299, type: 3}
+    preview: {fileID: 21300000, guid: 318c0c77586682c4b8ddb08c16a19299, type: 3}
+  - itemId: arm_s
+    type: arm
+    name: arm
+    mesh: {fileID: -5129051023255182955, guid: 6154b48672313f6498fc0cca0df91a5f, type: 3}
+    price: 20
+    icon: {fileID: 21300000, guid: df7d542f81367f74a900e9a127aa6b0c, type: 3}
+    preview: {fileID: 21300000, guid: df7d542f81367f74a900e9a127aa6b0c, type: 3}
+  - itemId: arm_f
+    type: arm
+    name: arm hert
+    mesh: {fileID: -5129051023255182955, guid: a340a8ce8b55717479db3a57dbb4c4f9, type: 3}
+    price: 40
+    icon: {fileID: 21300000, guid: 1351d87a56d103a49aa16c6484f2e944, type: 3}
+    preview: {fileID: 21300000, guid: 1351d87a56d103a49aa16c6484f2e944, type: 3}
+  - itemId: leg_s
+    type: leg
+    name: 'leg '
+    mesh: {fileID: 6174923879590721309, guid: 6154b48672313f6498fc0cca0df91a5f, type: 3}
+    price: 20
+    icon: {fileID: 21300000, guid: 037d35776bd38a241ade4d1f9efd5539, type: 3}
+    preview: {fileID: 21300000, guid: 037d35776bd38a241ade4d1f9efd5539, type: 3}
+  - itemId: leh_h
+    type: leg
+    name: 'leg heel '
+    mesh: {fileID: 6174923879590721309, guid: a340a8ce8b55717479db3a57dbb4c4f9, type: 3}
+    price: 40
+    icon: {fileID: 21300000, guid: e49b9f6c29aa6de489fbf2a36ef578c8, type: 3}
+    preview: {fileID: 21300000, guid: e49b9f6c29aa6de489fbf2a36ef578c8, type: 3}
+  - itemId: bod_s
+    type: torso
+    name: bod
+    mesh: {fileID: 3114029338049427143, guid: 6154b48672313f6498fc0cca0df91a5f, type: 3}
+    price: 40
+    icon: {fileID: 21300000, guid: e1536ab3e1b63fa4196aaa577f1297df, type: 3}
+    preview: {fileID: 21300000, guid: e1536ab3e1b63fa4196aaa577f1297df, type: 3}
+  - itemId: bod_b
+    type: torso
+    name: bod beer belly
+    mesh: {fileID: 2959467708922500008, guid: a340a8ce8b55717479db3a57dbb4c4f9, type: 3}
+    price: 80
+    icon: {fileID: 21300000, guid: 6e4b36b363709a74fa6885387d1f2f5a, type: 3}
+    preview: {fileID: 21300000, guid: 6e4b36b363709a74fa6885387d1f2f5a, type: 3}
+  clothesInfos:
+  - itemId: shirt
+    type: torso
+    name: shirt
+    mesh1: {fileID: 2847213652559249330, guid: 2e8a8ec2fed11d648badf489b709eb4f, type: 3}
+    mesh2: {fileID: -308928533326909743, guid: 2e8a8ec2fed11d648badf489b709eb4f, type: 3}
+    price: 50
+    icon: {fileID: 21300000, guid: 9994c5b86667da44aa28b17ca323f020, type: 3}
+    preview: {fileID: 21300000, guid: 9994c5b86667da44aa28b17ca323f020, type: 3}
+  - itemId: pants
+    type: leg
+    name: pants
+    mesh1: {fileID: -4856331242625222461, guid: 2e8a8ec2fed11d648badf489b709eb4f, type: 3}
+    mesh2: {fileID: -4352258593214999454, guid: 2e8a8ec2fed11d648badf489b709eb4f, type: 3}
+    price: 50
+    icon: {fileID: 21300000, guid: c35cd0c18eafe5440b26fe4fed9e3666, type: 3}
+    preview: {fileID: 21300000, guid: c35cd0c18eafe5440b26fe4fed9e3666, type: 3}

@@ -10,6 +10,7 @@ public class ShopClothCard : MonoBehaviour, IPointerClickHandler
     public Sprite preview;
     public Sprite icon;
     public GameObject previewObj;
+    public string itemId;
     public string name;
     public int price;
 
@@ -25,10 +26,11 @@ public class ShopClothCard : MonoBehaviour, IPointerClickHandler
     }
 
     public void Configure(Inventory targetInventory, GameObject targetPreview, string itemName,
-        int itemPrice, Color itemColor, Sprite itemIcon, Sprite itemPreview)
+        int itemPrice, Color itemColor, Sprite itemIcon, Sprite itemPreview, string targetItemId = null)
     {
         inventory = targetInventory;
         previewObj = targetPreview;
+        itemId = targetItemId;
         name = itemName;
         price = itemPrice;
         color = itemColor;
@@ -40,7 +42,7 @@ public class ShopClothCard : MonoBehaviour, IPointerClickHandler
     {
         if (doubleClickTimer > 0f)
         {
-            ShopCartUtility.AddCloth(inventory, name, price, icon, color);
+            ShopCartUtility.AddCloth(inventory, name, price, icon, color, itemId);
             RefreshCount();
         }
 
@@ -53,12 +55,12 @@ public class ShopClothCard : MonoBehaviour, IPointerClickHandler
         if (eventData.button != PointerEventData.InputButton.Right)
             return;
 
-        int amount = ShopCartUtility.RemoveOne(inventory, name);
+        int amount = ShopCartUtility.RemoveOne(inventory, name, itemId);
         ShopCartUtility.SetCount(countObj, amount);
     }
 
     void RefreshCount()
     {
-        ShopCartUtility.SetCount(countObj, ShopCartUtility.GetAmount(inventory, name));
+        ShopCartUtility.SetCount(countObj, ShopCartUtility.GetAmount(inventory, name, itemId));
     }
 }

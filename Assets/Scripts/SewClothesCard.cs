@@ -17,7 +17,6 @@ public class SewClothesCard : MonoBehaviour
     {
         if (sewResulter == null || sewingClothes == null)
         {
-            Debug.LogWarning("SewClothesCard: не назначена выкройка или SewResulter.", this);
             return;
         }
 

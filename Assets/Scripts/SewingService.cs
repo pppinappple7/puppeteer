@@ -33,6 +33,7 @@ public static class SewingService
 
         Inventory.Part result = new Inventory.Part
         {
+            itemId = pattern.itemId,
             mesh = pattern.mesh,
             color = cloth.color,
             type = pattern.type,
@@ -93,6 +94,7 @@ public static class SewingService
 
         Inventory.Clothes result = new Inventory.Clothes
         {
+            itemId = pattern.itemId,
             mesh1 = pattern.mesh1,
             mesh2 = pattern.mesh2,
             color1 = cloth1.color,

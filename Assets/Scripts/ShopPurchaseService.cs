@@ -10,49 +10,33 @@ public static class ShopPurchaseService
 
         ShopCheck check = inventory.ShopCheck;
         if (check == null)
-        {
-            Debug.LogError("ShopPurchaseService: ShopCheck reference is missing.", inventory);
             return;
-        }
 
         check.Refresh();
-        if (!check.TryGetTotal(out int total, out string error))
-        {
-            Debug.LogWarning("ShopPurchaseService: purchase cancelled. " + error, inventory);
+        if (!check.TryGetTotal(out int total, out _))
             return;
-        }
 
         if (inventory.money <= total)
         {
-            GameObject moneyCounter = inventory.moneyCounter;
-            if (moneyCounter != null)
+            if (inventory.moneyCounter != null)
             {
-                Money money = moneyCounter.GetComponent<Money>();
+                Money money = inventory.moneyCounter.GetComponent<Money>();
                 if (money != null)
                     money.NotEnough();
-                else
-                    Debug.LogWarning("ShopPurchaseService: Money component is missing.", moneyCounter);
             }
             return;
         }
 
         if (inventory.BoxPrefab == null)
-        {
-            Debug.LogError("ShopPurchaseService: box prefab is not assigned.", inventory);
             return;
-        }
 
-        if (!TryCreateContents(inventory.cart, out List<Inventory.SewingItem> contents, out error))
-        {
-            Debug.LogWarning("ShopPurchaseService: purchase cancelled. " + error, inventory);
+        if (!TryCreateContents(inventory.cart, out List<Inventory.SewingItem> contents))
             return;
-        }
 
         GameObject boxObject = Object.Instantiate(inventory.BoxPrefab);
         Box box = boxObject.GetComponent<Box>();
         if (box == null)
         {
-            Debug.LogError("ShopPurchaseService: Box prefab has no Box component.", boxObject);
             Object.Destroy(boxObject);
             return;
         }
@@ -71,7 +55,7 @@ public static class ShopPurchaseService
     }
 
     static bool TryCreateContents(List<Inventory.ShopItem> cart,
-        out List<Inventory.SewingItem> contents, out string error)
+        out List<Inventory.SewingItem> contents)
     {
         contents = new List<Inventory.SewingItem>();
 
@@ -81,6 +65,7 @@ public static class ShopPurchaseService
             {
                 contents.Add(new Inventory.SewingCloth
                 {
+                    itemId = cloth.itemId,
                     price = cloth.price,
                     ammount = cloth.ammount,
                     name = cloth.name,
@@ -91,13 +76,11 @@ public static class ShopPurchaseService
             else if (item is Inventory.ShopPart part)
             {
                 if (part.mesh == null || string.IsNullOrWhiteSpace(part.type))
-                {
-                    error = "Pattern has missing mesh or type: " + part.name;
                     return false;
-                }
 
                 contents.Add(new Inventory.SewingPart
                 {
+                    itemId = part.itemId,
                     price = part.price,
                     name = part.name,
                     icon = part.icon,
@@ -108,13 +91,11 @@ public static class ShopPurchaseService
             else if (item is Inventory.ShopClothes clothes)
             {
                 if (clothes.mesh1 == null || clothes.mesh2 == null || string.IsNullOrWhiteSpace(clothes.type))
-                {
-                    error = "Clothes have missing meshes or type: " + clothes.name;
                     return false;
-                }
 
                 contents.Add(new Inventory.SewingClothes
                 {
+                    itemId = clothes.itemId,
                     price = clothes.price,
                     name = clothes.name,
                     icon = clothes.icon,
@@ -125,13 +106,10 @@ public static class ShopPurchaseService
             }
             else
             {
-                error = item == null ? "Cart contains an empty item reference." :
-                    "Cart contains an unsupported item type: " + item.GetType().Name;
                 return false;
             }
         }
 
-        error = null;
         return true;
     }
 

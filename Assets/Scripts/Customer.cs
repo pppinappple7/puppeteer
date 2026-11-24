@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Customer : MonoBehaviour
 {
+    public ShiftManager ShiftManager;
     [SerializeField, Range(0f, 1f)] float requiredPercent;
 
     [System.Serializable]
@@ -26,8 +27,8 @@ public class Customer : MonoBehaviour
 
     [SerializeField] ColorRequirement[] colorRequirements;
     [SerializeField] MeshRequirement[] meshRequirements;
-    [SerializeField] GameObject doll;
-    [SerializeField] Inventory inventory;
+    public GameObject doll;
+    public Inventory inventory;
 
     public int payment;
     public int goods;
@@ -54,6 +55,7 @@ public class Customer : MonoBehaviour
 
     void Start()
     {
+        uiShower=GameObject.Find("Combiner").GetComponent<UIShower>();
         shown = true;
         taken = false;
 
@@ -68,13 +70,8 @@ public class Customer : MonoBehaviour
             Speech.maxVisibleCharacters = 0;
             Speech.text = GetLine(order, 0);
         }
-        else
-        {
-            Debug.LogWarning("Customer has no speech text assigned.", this);
-        }
+        
 
-        if (selfUI == null)
-            Debug.LogWarning("Customer has no UIShower component.", this);
     }
 
     void Update()
@@ -125,6 +122,11 @@ public class Customer : MonoBehaviour
 
         if (doll != null)
             doll.SetActive(uiShower != null && uiShower.shown);
+
+        if (over && spriteRenderer.color.a <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void Next()
@@ -157,6 +159,7 @@ public class Customer : MonoBehaviour
             {
                 over = true;
                 shown = false;
+                ShiftManager.customersServed++;
                 return;
             }
 
@@ -165,32 +168,29 @@ public class Customer : MonoBehaviour
         }
     }
 
-    public void GetDolled(GameObject dollToEvaluate)
+    public void GetDolled()
     {
         if (gotDolled)
             return;
 
         if (inventory == null)
         {
-            Debug.LogWarning("Customer cannot complete the order: Inventory is not assigned.", this);
             return;
         }
 
         if (inventory.moneyCounter == null)
         {
-            Debug.LogWarning("Customer cannot complete the order: moneyCounter is not assigned.", this);
             return;
         }
 
         DollEvaluationResult result = DollEvaluator.Evaluate(
-            dollToEvaluate,
+            doll,
             colorRequirements,
             meshRequirements,
             requiredPercent);
 
         if (!result.IsValid)
         {
-            Debug.LogWarning("Customer could not evaluate the doll: " + result.Error, this);
             return;
         }
 
@@ -201,29 +201,25 @@ public class Customer : MonoBehaviour
         long updatedMoney = (long)inventory.money + reward;
         if (updatedMoney > int.MaxValue || updatedMoney < int.MinValue)
         {
-            Debug.LogWarning("Customer cannot complete the order: money value would overflow.", this);
             return;
         }
 
-        if (dollToEvaluate == null)
+        if (doll == null)
         {
-            Debug.LogWarning("Customer cannot complete the order: doll reference is missing.", this);
             return;
         }
 
-        DollAssembly assembly = dollToEvaluate.GetComponent<DollAssembly>();
+        DollAssembly assembly = doll.GetComponent<DollAssembly>();
         if (assembly == null)
-            assembly = dollToEvaluate.GetComponentInChildren<DollAssembly>(true);
-
+            assembly = doll.GetComponentInChildren<DollAssembly>(true);
+            
         if (assembly == null)
         {
-            Debug.LogWarning("Customer cannot complete the order: DollAssembly is missing from the doll.", this);
             return;
         }
 
         if (!assembly.TryCompleteOrder(inventory, out string assemblyError))
         {
-            Debug.LogWarning("Customer could not consume the installed items: " + assemblyError, this);
             return;
         }
 
@@ -251,8 +247,8 @@ public class Customer : MonoBehaviour
         {
             over = true;
             shown = false;
-            Debug.LogWarning("Customer has no reaction dialogue configured.", this);
         }
+
     }
 
     string GetLine(string[] lines, int index)
