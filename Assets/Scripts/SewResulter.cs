@@ -1,8 +1,10 @@
+
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class SewResulter : MonoBehaviour
 {
+    [SerializeField] MeshRenderer interactiveCloth;
     public int price;
     public int price1;
     public int price2;
@@ -81,6 +83,8 @@ public class SewResulter : MonoBehaviour
         }
         else
         {
+
+            interactiveCloth.material.color = cloth.color;
             selectedCloth1 = cloth;
             price1 = cloth.price;
 
